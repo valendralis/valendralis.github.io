@@ -201,7 +201,6 @@
         // Calculates how many days have passed since your specific start date
         function getDaysSinceStart() {
             const now = new Date();
-            // Reset hours to midnight for accurate day calculation
             const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const startMidnight = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
             
@@ -211,21 +210,18 @@
             return diffDays;
         }
 
-        function checkStatus() {
-            const today = getTodayString();
-            const savedDate = localStorage.getItem('lastUnlockedDate');
-            const savedIndex = localStorage.getItem('currentReasonIndex');
-
-            if (savedDate === today && savedIndex !== null) {
-                displayMessage(savedIndex);
-            }
-        }
-
         function unlockMessage() {
             const daysPassed = getDaysSinceStart();
+            let reasonIndex = 0;
 
-            // Guardrail: If she opens it before the start date, keep it locked at index 0
-            const reasonIndex = daysPassed < 0 ? 0 : daysPassed % reasons.length;
+            if (daysPassed >= 0) {
+                // Official countdown has started (Day 1, Day 2, etc.)
+                // We add 1 so that tomorrow (August 12) loads reasons[1]
+                reasonIndex = (daysPassed + 1) % reasons.length;
+            } else {
+                // 🔴 It's today (August 11) or earlier! Show the very first reason as a sneak peek.
+                reasonIndex = 0;
+            }
 
             localStorage.setItem('lastUnlockedDate', getTodayString());
             localStorage.setItem('currentReasonIndex', reasonIndex);
@@ -239,12 +235,18 @@
             messageText.style.display = 'block';
             timerContainer.style.display = 'block';
             
-            // Fixed Counter Math based on your start date
             const daysPassed = getDaysSinceStart();
             const totalReasonsCount = reasons.length;
             
-            // Calculate remaining count based on days passed
-            const remainingCount = daysPassed < 0 ? totalReasonsCount : totalReasonsCount - (daysPassed + 1);
+            let remainingCount = totalReasonsCount;
+
+            if (daysPassed >= 0) {
+                // Math for when the year is officially running
+                remainingCount = totalReasonsCount - (daysPassed + 1);
+            } else {
+                // 🔴 Math for today's preview: It will show exactly how many total reasons are waiting for tomorrow
+                remainingCount = totalReasonsCount - 1;
+            }
 
             if (remainingCount <= 0) {
                 reasonsLeftElement.innerText = "You've unlocked every reason in this collection! ❤️";
