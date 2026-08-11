@@ -164,14 +164,11 @@
         <div class="timer-container" id="timer-container">
             <div>Next reason unlocks in:</div>
             <div class="timer" id="countdown">00:00:00</div>
-            <div class="timer-container" id="timer-container">
             <div id="reasons-left" style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8;"></div>
         </div>
-    </div>
 
     <script>
-        // 🔴 CUSTOMIZE YOUR REASONS HERE! 
-        // Add as many entries as you want. It will loop dynamically based on the day of the year.
+        // 🔴 YOUR CUSTOMIZED REASONS ARRAY
         const reasons = [
             "The way your eyes instantly crinkle up when you genuinely laugh out loud.",
             "How incredibly supportive you are, even when I'm stressing over the smallest things.",
@@ -180,82 +177,100 @@
             "How fiercely passionate you get when talking about the things you love.",
             "The simple fact that you make across-the-globe distances feel completely conquerable.",
             "How you always remember the tiniest details I mentioned passingly weeks ago."
-        ];
+            ];
 
         const card = document.getElementById('card');
         const lockState = document.getElementById('lock-state');
         const messageText = document.getElementById('message-text');
         const timerContainer = document.getElementById('timer-container');
         const countdownElement = document.getElementById('countdown');
+        const reasonsLeftElement = document.getElementById('reasons-left'); // 🔴 Added
 
-        // Check if user already unlocked a message today
-        function getTodayString() {
-            const d = new Date();
-            return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    function getTodayString() {
+        const d = new Date();
+        return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }
+    
+    // 🔴 Helper function to figure out exactly which day number of the year it is
+    function getDayOfYear() {
+        const now = new Date();
+        const start = new Date(now.getFullYear(), 0, 0);
+        const diff = now - start;
+        const oneDay = 1000 * 60 * 60 * 24;
+        return Math.floor(diff / oneDay);
+    }
+    
+    function checkStatus() {
+        const today = getTodayString();
+        const savedDate = localStorage.getItem('lastUnlockedDate');
+        const savedIndex = localStorage.getItem('currentReasonIndex');
+    
+        if (savedDate === today && savedIndex !== null) {
+            displayMessage(savedIndex);
         }
-
-        function checkStatus() {
-            const today = getTodayString();
-            const savedDate = localStorage.getItem('lastUnlockedDate');
-            const savedIndex = localStorage.getItem('currentReasonIndex');
-
-            if (savedDate === today && savedIndex !== null) {
-                displayMessage(savedIndex);
-            }
+    }
+    
+    function unlockMessage() {
+        const today = getTodayString();
+        const dayOfYear = getDayOfYear();
+        
+        // Cycle through array based on day of the year
+        const reasonIndex = dayOfYear % reasons.length;
+    
+        localStorage.setItem('lastUnlockedDate', today);
+        localStorage.setItem('currentReasonIndex', reasonIndex);
+    
+        displayMessage(reasonIndex);
+    }
+    
+    function displayMessage(index) {
+        lockState.style.display = 'none';
+        messageText.innerText = `\"${reasons[index]}\"`;
+        messageText.style.display = 'block';
+        timerContainer.style.display = 'block';
+        
+        // 🔴 THE COUNTER MATH: Calculates remaining items in your array
+        const dayOfYear = getDayOfYear();
+        const totalReasonsCount = reasons.length;
+        
+        // Tracks how many unique items in the array loop are left to see
+        const currentLoopPosition = (dayOfYear % totalReasonsCount) + 1;
+        const remainingCount = totalReasonsCount - currentLoopPosition;
+    
+        if (remainingCount === 0) {
+            reasonsLeftElement.innerText = "You've unlocked the final reason in this collection! ❤️";
+        } else {
+            reasonsLeftElement.innerText = `${remainingCount} beautiful reasons left to discover.`;
         }
-
-        function unlockMessage() {
-            const today = getTodayString();
-            
-            // Generate deterministic index based on day of the year so it changes daily
+    
+        startCountdown();
+    }
+    
+    function startCountdown() {
+        function updateTimer() {
             const now = new Date();
-            const start = new Date(now.getFullYear(), 0, 0);
-            const diff = now - start;
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
-            
-            const reasonIndex = dayOfYear % reasons.length;
-
-            localStorage.setItem('lastUnlockedDate', today);
-            localStorage.setItem('currentReasonIndex', reasonIndex);
-
-            displayMessage(reasonIndex);
-        }
-
-        function displayMessage(index) {
-            lockState.style.display = 'none';
-            messageText.innerText = `\"${reasons[index]}\"`;
-            messageText.style.display = 'block';
-            timerContainer.style.display = 'block';
-            startCountdown();
-        }
-
-        function startCountdown() {
-            function updateTimer() {
-                const now = new Date();
-                const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-                const diff = tomorrow - now;
-
-                if (diff <= 0) {
-                    localStorage.removeItem('lastUnlockedDate');
-                    localStorage.removeItem('currentReasonIndex');
-                    location.reload();
-                    return;
-                }
-
-                const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-
-                countdownElement.innerText = `${hours}:${minutes}:${seconds}`;
+            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            const diff = tomorrow - now;
+    
+            if (diff <= 0) {
+                localStorage.removeItem('lastUnlockedDate');
+                localStorage.removeItem('currentReasonIndex');
+                location.reload();
+                return;
             }
-            
-            updateTimer();
-            setInterval(updateTimer, 1000);
+    
+            const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+    
+            countdownElement.innerText = `${hours}:${minutes}:${seconds}`;
         }
-
-        // Initialize setup check on load
-        checkStatus();
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+    
+    checkStatus();
     </script>
 </body>
 </html>
