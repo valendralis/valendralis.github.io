@@ -27,7 +27,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-serif: center;
+            align-items: center;
             justify-content: center;
             padding: 20px;
             overflow-x: hidden;
@@ -53,7 +53,7 @@
             width: 100%;
             text-align: center;
             z-index: 1;
-            margin: 0 auto;
+            margin: 0 auto; /* Centering layout fix */
         }
 
         h1 {
@@ -98,7 +98,7 @@
             font-size: 1.3rem;
             line-height: 1.6;
             display: none;
-            animation: fadeIn 0.6s ease forward;
+            animation: fadeIn 0.6s ease forwards;
         }
 
         .btn {
@@ -166,9 +166,11 @@
             <div class="timer" id="countdown">00:00:00</div>
             <div id="reasons-left" style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8;"></div>
         </div>
+    </div>
 
     <script>
-        // 🔴 YOUR CUSTOMIZED REASONS ARRAY
+        // 🔴 CUSTOMIZE YOUR REASONS HERE!
+        // Add as many as you'd like. The counter updates automatically.
         const reasons = [
             "The way your eyes instantly crinkle up when you genuinely laugh out loud.",
             "How incredibly supportive you are, even when I'm stressing over the smallest things.",
@@ -177,100 +179,96 @@
             "How fiercely passionate you get when talking about the things you love.",
             "The simple fact that you make across-the-globe distances feel completely conquerable.",
             "How you always remember the tiniest details I mentioned passingly weeks ago."
-            ];
+        ];
 
         const card = document.getElementById('card');
         const lockState = document.getElementById('lock-state');
         const messageText = document.getElementById('message-text');
         const timerContainer = document.getElementById('timer-container');
         const countdownElement = document.getElementById('countdown');
-        const reasonsLeftElement = document.getElementById('reasons-left'); // 🔴 Added
+        const reasonsLeftElement = document.getElementById('reasons-left');
 
-    function getTodayString() {
-        const d = new Date();
-        return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-    }
-    
-    // 🔴 Helper function to figure out exactly which day number of the year it is
-    function getDayOfYear() {
-        const now = new Date();
-        const start = new Date(now.getFullYear(), 0, 0);
-        const diff = now - start;
-        const oneDay = 1000 * 60 * 60 * 24;
-        return Math.floor(diff / oneDay);
-    }
-    
-    function checkStatus() {
-        const today = getTodayString();
-        const savedDate = localStorage.getItem('lastUnlockedDate');
-        const savedIndex = localStorage.getItem('currentReasonIndex');
-    
-        if (savedDate === today && savedIndex !== null) {
-            displayMessage(savedIndex);
+        function getTodayString() {
+            const d = new Date();
+            return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
         }
-    }
-    
-    function unlockMessage() {
-        const today = getTodayString();
-        const dayOfYear = getDayOfYear();
-        
-        // Cycle through array based on day of the year
-        const reasonIndex = dayOfYear % reasons.length;
-    
-        localStorage.setItem('lastUnlockedDate', today);
-        localStorage.setItem('currentReasonIndex', reasonIndex);
-    
-        displayMessage(reasonIndex);
-    }
-    
-    function displayMessage(index) {
-        lockState.style.display = 'none';
-        messageText.innerText = `\"${reasons[index]}\"`;
-        messageText.style.display = 'block';
-        timerContainer.style.display = 'block';
-        
-        // 🔴 THE COUNTER MATH: Calculates remaining items in your array
-        const dayOfYear = getDayOfYear();
-        const totalReasonsCount = reasons.length;
-        
-        // Tracks how many unique items in the array loop are left to see
-        const currentLoopPosition = (dayOfYear % totalReasonsCount) + 1;
-        const remainingCount = totalReasonsCount - currentLoopPosition;
-    
-        if (remainingCount === 0) {
-            reasonsLeftElement.innerText = "You've unlocked the final reason in this collection! ❤️";
-        } else {
-            reasonsLeftElement.innerText = `${remainingCount} beautiful reasons left to discover.`;
-        }
-    
-        startCountdown();
-    }
-    
-    function startCountdown() {
-        function updateTimer() {
+
+        function getDayOfYear() {
             const now = new Date();
-            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-            const diff = tomorrow - now;
-    
-            if (diff <= 0) {
-                localStorage.removeItem('lastUnlockedDate');
-                localStorage.removeItem('currentReasonIndex');
-                location.reload();
-                return;
-            }
-    
-            const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-    
-            countdownElement.innerText = `${hours}:${minutes}:${seconds}`;
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
         }
-        
-        updateTimer();
-        setInterval(updateTimer, 1000);
-    }
-    
-    checkStatus();
+
+        function checkStatus() {
+            const today = getTodayString();
+            const savedDate = localStorage.getItem('lastUnlockedDate');
+            const savedIndex = localStorage.getItem('currentReasonIndex');
+
+            if (savedDate === today && savedIndex !== null) {
+                displayMessage(savedIndex);
+            }
+        }
+
+        function unlockMessage() {
+            const today = getTodayString();
+            const dayOfYear = getDayOfYear();
+            
+            const reasonIndex = dayOfYear % reasons.length;
+
+            localStorage.setItem('lastUnlockedDate', today);
+            localStorage.setItem('currentReasonIndex', reasonIndex);
+
+            displayMessage(reasonIndex);
+        }
+
+        function displayMessage(index) {
+            lockState.style.display = 'none';
+            messageText.innerText = `\"${reasons[index]}\"`;
+            messageText.style.display = 'block';
+            timerContainer.style.display = 'block';
+            
+            // Counter Calculation
+            const dayOfYear = getDayOfYear();
+            const totalReasonsCount = reasons.length;
+            const currentLoopPosition = (dayOfYear % totalReasonsCount) + 1;
+            const remainingCount = totalReasonsCount - currentLoopPosition;
+
+            if (remainingCount === 0) {
+                reasonsLeftElement.innerText = "You've unlocked the final reason in this collection! ❤️";
+            } else {
+                reasonsLeftElement.innerText = `${remainingCount} beautiful reasons left to discover.`;
+            }
+
+            startCountdown();
+        }
+
+        function startCountdown() {
+            function updateTimer() {
+                const now = new Date();
+                const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+                const diff = tomorrow - now;
+
+                if (diff <= 0) {
+                    localStorage.removeItem('lastUnlockedDate');
+                    localStorage.removeItem('currentReasonIndex');
+                    location.reload();
+                    return;
+                }
+
+                const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+                countdownElement.innerText = `${hours}:${minutes}:${seconds}`;
+            }
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        checkStatus();
     </script>
 </body>
 </html>
