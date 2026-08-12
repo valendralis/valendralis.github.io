@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Favorite Person In The Universe 🌌</title>
-    <!-- Sharp Futuristic Space Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Elegant, Sparkly Classic Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep-space: #03010a;
-            --nebula-glow: #13072b;
-            --card-space-bg: rgba(12, 7, 30, 0.9);
+            --bg-deep-space: #060212;
+            --nebula-glow: #1a0b36;
+            --card-space-bg: rgba(15, 8, 32, 0.85);
             --star-gold: #ffe600;
             --cosmic-pink: #ff2a85;
             --laser-cyan: #00f3ff;
             --text-starlight: #ffffff;
-            --text-space-dust: #a195bd;
+            --text-space-dust: #c5b6e6;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Orbitron', 'Segoe UI', -apple-system, sans-serif;
+            font-family: 'Playfair Display', Georgia, serif;
         }
 
         body {
@@ -38,7 +38,7 @@
             position: relative;
         }
 
-        /* Re-engineered High-Definition Starfield & Asteroid Layer */
+        /* Moving Galaxy Stars and Twinkling Layers */
         .galaxy-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -47,20 +47,53 @@
             overflow: hidden;
         }
 
-        .space-particle {
+        /* Star Dust Layer 1: Drifting Stars */
+        .galaxy-container::before, .galaxy-container::after {
+            content: '';
             position: absolute;
-            color: rgba(255, 255, 255, 0.8);
-            user-select: none;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                radial-gradient(circle, #fff 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,255,255,0.4) 1.5px, transparent 1.5px),
+                radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 150px 150px, 250px 250px, 400px 400px;
+            animation: driftGalaxy 120s linear infinite;
+            opacity: 0.6;
         }
 
-        /* Cosmic Float Speeds for Depth */
-        .float-slow { animation: floatSpace 25s linear infinite alternate; }
-        .float-med { animation: floatSpace 18s linear infinite alternate-reverse; }
-        .float-fast { animation: floatSpace 12s linear infinite alternate; }
+        .galaxy-container::after {
+            background-size: 200px 200px, 350px 350px, 500px 500px;
+            animation: driftGalaxy 90s linear infinite reverse;
+            opacity: 0.4;
+        }
 
-        @keyframes floatSpace {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); }
-            100% { transform: translateY(-50px) translateX(30px) rotate(360deg); }
+        @keyframes driftGalaxy {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Sparkly Floating Icons */
+        .space-particle {
+            position: absolute;
+            user-select: none;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+        }
+
+        .float-slow { animation: sparkleFloat 12s ease-in-out infinite alternate, twinkle 3s ease-in-out infinite alternate; }
+        .float-med { animation: sparkleFloat 9s ease-in-out infinite alternate-reverse, twinkle 2s ease-in-out infinite alternate; }
+        .float-fast { animation: sparkleFloat 6s ease-in-out infinite alternate, twinkle 1.5s ease-in-out infinite alternate; }
+
+        @keyframes sparkleFloat {
+            0% { transform: translateY(0) translateX(0) scale(0.9); }
+            100% { transform: translateY(-30px) translateX(20px) scale(1.1); }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; filter: drop-shadow(0 0 2px rgba(255,255,255,0.3)); }
+            100% { opacity: 1; filter: drop-shadow(0 0 12px rgba(255, 230, 0, 0.9)); }
         }
 
         .container {
@@ -72,11 +105,11 @@
         }
 
         h1 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            margin-bottom: 12px;
-            text-shadow: 0 0 12px var(--cosmic-pink), 0 0 25px rgba(255, 42, 133, 0.4);
+            font-family: 'Great Vibes', cursive, serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+            text-shadow: 0 0 15px var(--cosmic-pink), 0 0 30px rgba(255, 255, 255, 0.5);
             color: #fff;
         }
 
@@ -85,17 +118,18 @@
             margin-bottom: 35px;
             font-size: 0.85rem;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         /* Sparkly Dynamic Cosmic Border Card */
         .card-border-wrap {
-            padding: 4px;
-            background: linear-gradient(45deg, var(--cosmic-pink), #ff9ebb, var(--laser-cyan), #bd42ff, var(--cosmic-pink));
+            padding: 3px;
+            background: linear-gradient(45deg, var(--cosmic-pink), #ffcbdc, var(--laser-cyan), #e0b3ff, var(--cosmic-pink));
             background-size: 400% 400%;
-            border-radius: 24px;
-            box-shadow: 0 0 35px rgba(0, 243, 255, 0.3), 0 0 60px rgba(255, 42, 133, 0.25);
-            animation: sparkleGlowBorder 6s linear infinite;
+            border-radius: 30px;
+            box-shadow: 0 0 40px rgba(255, 42, 133, 0.3), 0 0 60px rgba(0, 243, 255, 0.2);
+            animation: sparkleGlowBorder 8s ease infinite;
         }
 
         @keyframes sparkleGlowBorder {
@@ -106,10 +140,10 @@
 
         .card {
             background-color: var(--card-space-bg);
-            border-radius: 20px;
-            padding: 50px 30px;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            border-radius: 27px;
+            padding: 50px 35px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             min-height: 280px;
             display: flex;
             flex-direction: column;
@@ -117,7 +151,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Launch Controls */
@@ -134,11 +168,11 @@
             display: inline-block;
             filter: drop-shadow(0 0 15px rgba(255,243,0,0.7));
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.3s ease;
         }
 
         .rocket-ship:hover {
-            transform: scale(1.08);
+            transform: scale(1.1) rotate(-10deg);
         }
 
         /* Rocket Blast Off Animation Class */
@@ -154,39 +188,40 @@
 
         .btn-launch {
             background: transparent;
-            color: var(--laser-cyan);
-            border: 2px solid var(--laser-cyan);
-            padding: 15px 35px;
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            padding: 14px 40px;
             font-size: 0.9rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.25);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
         }
 
         .btn-launch:hover {
-            background: var(--laser-cyan);
+            background: #fff;
             color: var(--bg-deep-space);
-            box-shadow: 0 0 25px var(--laser-cyan);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
             transform: translateY(-2px);
         }
 
         .message-text {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             font-weight: 400;
+            font-style: italic;
             line-height: 1.8;
-            letter-spacing: 1px;
             display: none;
             color: #fff;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
             animation: teleportIn 0.8s ease-out forwards;
         }
 
         @keyframes teleportIn {
-            from { opacity: 0; transform: scale(0.9); filter: blur(12px); }
+            from { opacity: 0; transform: scale(0.95); filter: blur(8px); }
             to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
@@ -202,41 +237,36 @@
 
         .timer {
             font-size: 1.4rem;
-            font-weight: 900;
+            font-weight: 700;
             color: var(--star-gold);
             margin-top: 8px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-shadow: 0 0 12px rgba(255, 230, 0, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- Visible Physical Background Elements -->
+    <!-- Visible Sparkly Interactive Particles Layer -->
     <div class="galaxy-container">
-        <!-- Asteroids -->
-        <div class="space-particle float-slow" style="font-size: 2.5rem; top: 12%; left: 8%;">☄️</div>
-        <div class="space-particle float-med" style="font-size: 1.8rem; bottom: 18%; right: 7%;">☄️</div>
-        <div class="space-particle float-fast" style="font-size: 2.2rem; top: 75%; left: 12%; opacity: 0.4;">☄️</div>
-        
-        <!-- Stars & Sparkles -->
-        <div class="space-particle float-med" style="font-size: 1.2rem; top: 25%; right: 15%;">⭐</div>
-        <div class="space-particle float-slow" style="font-size: 1rem; top: 5%; right: 40%;">✨</div>
-        <div class="space-particle float-fast" style="font-size: 1.5rem; bottom: 35%; left: 5%;">✨</div>
-        <div class="space-particle float-slow" style="font-size: 0.9rem; bottom: 8%; left: 45%;">⭐</div>
-        <div class="space-particle float-med" style="font-size: 1.3rem; top: 48%; right: 8%; opacity: 0.5;">✨</div>
-        <div class="space-particle float-fast" style="font-size: 1.1rem; top: 68%; right: 32%;">⭐</div>
+        <div class="space-particle float-slow" style="font-size: 1.5rem; top: 12%; left: 8%;">✨</div>
+        <div class="space-particle float-med" style="font-size: 1.2rem; bottom: 18%; right: 7%;">⭐</div>
+        <div class="space-particle float-fast" style="font-size: 1.6rem; top: 75%; left: 12%;">✨</div>
+        <div class="space-particle float-med" style="font-size: 1.2rem; top: 25%; right: 15%;">✨</div>
+        <div class="space-particle float-slow" style="font-size: 1.4rem; top: 5%; right: 40%;">⭐</div>
+        <div class="space-particle float-fast" style="font-size: 1.1rem; bottom: 35%; left: 5%;">✨</div>
+        <div class="space-particle float-slow" style="font-size: 1rem; bottom: 8%; left: 45%;">⭐</div>
     </div>
 
     <div class="container">
-        <h1>GALAXY LOGS 🎂</h1>
-        <p class="subtitle" id="dynamic-subtitle">TRANSMITTING LOVE DATA ACROSS SPACE...</p>
+        <h1>Galaxy Logs</h1>
+        <p class="subtitle" id="dynamic-subtitle">Transmitting love data across space...</p>
 
         <div class="card-border-wrap">
             <div class="card" id="card">
                 <div id="lock-state" class="launch-control">
                     <div class="rocket-ship" id="rocket-icon" onclick="triggerLaunchAnimation()">🚀</div>
-                    <button class="btn-launch" onclick="triggerLaunchAnimation()">LAUNCH CAPSULE</button>
+                    <button class="btn-launch" onclick="triggerLaunchAnimation()">Launch Capsule</button>
                 </div>
                 
                 <div class="message-text" id="message-text">
@@ -527,9 +557,9 @@
             const daysLeft = Math.max(0, reasons.length - currentDayIndex);
 
             if (daysLeft > 0) {
-                subtitleElement.innerText = `ORBIT LOGS: ${daysLeft} COSMIC REASONS REMAINING`;
+                subtitleElement.innerText = `Orbit Logs: ${daysLeft} Reasons Remaining`;
             } else {
-                subtitleElement.innerText = "ALL DAILY SECTOR TRANSMISSIONS COMPLETE ❤️";
+                subtitleElement.innerText = "All daily sector transmissions complete ❤️";
             }
 
             const todayString = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
@@ -557,12 +587,12 @@
 
         function displayMessage(index) {
             lockState.style.display = 'none';
-            messageText.innerText = `\"${reasons[index]}\"`;
+            messageText.innerText = `"${reasons[index]}"`;
             messageText.style.display = 'block';
             timerContainer.style.display = 'block';
 
             if (index >= reasons.length - 1) {
-                countdownElement.innerText = "INFINITE CALIBRATION COMPLETE";
+                countdownElement.innerText = "Infinite Calibration Complete";
             } else {
                 startCountdown();
             }
