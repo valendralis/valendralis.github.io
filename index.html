@@ -3,262 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To my amaranthine. 🌌</title>
+    <title>For My Favorite Person ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@500;700&display=swap');
+        :root {
+            --bg-color: #0f0c1b;
+            --card-bg: #1d1830;
+            --accent: #ff477e;
+            --accent-glow: rgba(255, 71, 126, 0.4);
+            --text-main: #f3f0fc;
+            --text-muted: #a39cb5;
+        }
 
-        /* Cosmic Galaxy Backdrop */
-        body, html {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
             min-height: 100vh;
-            background: radial-gradient(circle at center, #0f0c20 0%, #070414 60%, #020108 100%);
-            color: #f1f5f9;
-            font-family: 'Quicksand', sans-serif;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Combined Interactive Environment Canvas */
-        #space-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Launch Pad / Rocket Stage */
-        #envelope-stage {
-            position: relative;
-            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .envelope-btn {
-            background: rgba(124, 58, 237, 0.15);
-            border: 2px dashed #c084fc;
-            border-radius: 50%;
-            width: 130px;
-            height: 130px;
+        /* Subtle background stars */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+            background-size: 550px 550px, 350px 350px;
+            background-position: 0 0, 40px 60px;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff477e, #ff85a2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 40px var(--accent-glow);
+            border: 1px solid rgba(255, 71, 126, 0.2);
+            transition: all 0.4s ease;
+            min-height: 250px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+
+        .envelope-icon {
             font-size: 4rem;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(192, 132, 252, 0.3), inset 0 0 20px rgba(147, 51, 234, 0.2);
-            transition: all 0.4s ease;
-            animation: rocketHover 3s ease-in-out infinite;
+            transition: transform 0.3s ease;
         }
 
-        .envelope-btn:hover {
-            transform: scale(1.15);
-            border-style: solid;
-            box-shadow: 0 0 50px rgba(192, 132, 252, 0.8), inset 0 0 25px rgba(192, 132, 252, 0.4);
+        .envelope-icon:hover {
+            transform: scale(1.1) rotate(-5deg);
         }
 
-        @keyframes rocketHover {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .envelope-hint {
-            margin-top: 25px;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 1.5px;
-            color: #c084fc;
-            text-shadow: 0 0 10px rgba(192, 132, 252, 0.6);
-            animation: pulseText 2s infinite alternate;
-        }
-
-        @keyframes pulseText {
-            0% { opacity: 0.4; }
-            100% { opacity: 1; text-shadow: 0 0 18px #c084fc; }
-        }
-
-        /* Core Web Application Viewport */
-        #content-stage {
-            position: relative;
-            z-index: 5;
-            max-width: 680px;
-            width: 90%;
+        .message-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
             display: none;
-            opacity: 0;
-            flex-direction: column;
-            align-items: center;
-            transition: opacity 1.2s ease;
+            animation: fadeIn 0.6s ease forwards;
         }
 
-        /* Whimsical Galaxy Header */
-        h1 {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 500;
-            margin-bottom: 10px;
-            text-align: center;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 25px #7c3aed, 0 0 45px #db2777;
+        .btn {
+            background: linear-gradient(135deg, #ff477e, #ff7096);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        /* Whimsical Subtitle / Birthday Message */
-        .birthday-message {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 400;
-            margin-top: 0;
-            margin-bottom: 30px;
-            text-align: center;
-            color: #fca5a5;
-            letter-spacing: 0.5px;
-            line-height: 1.5;
-            text-shadow: 0 0 8px rgba(252, 165, 165, 0.5), 0 0 20px rgba(219, 39, 119, 0.4);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 71, 126, 0.6);
         }
 
-        /* Universe Sync Trackers */
-        .dashboard {
-            background: rgba(11, 7, 34, 0.65);
-            border: 1px solid rgba(168, 85, 247, 0.25);
-            border-radius: 16px;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        .btn:active {
+            transform: translateY(1px);
         }
 
-        .stat-group {
-            display: flex;
-            flex-direction: column;
+        .timer-container {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: none;
         }
 
-        .stat-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #a78bfa;
-            font-family: 'Fredoka', sans-serif;
-            margin-bottom: 4px;
+        .timer {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-top: 5px;
         }
 
-        .stat-value {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 8px rgba(255,255,255,0.3);
-        }
-
-        /* Sparkly Outline Custom Wrapper Border Box */
-        .galaxy-border-wrap {
-            width: 100%;
-            padding: 3px;
-            border-radius: 24px;
-            background: linear-gradient(45deg, #a855f7, #f43f5e, #3b82f6, #ec4899, #a855f7);
-            background-size: 300% 300%;
-            animation: cosmicSparkleBorder 5s ease infinite;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), 0 0 60px rgba(244, 63, 94, 0.25);
-            box-sizing: border-box;
-        }
-
-        @keyframes cosmicSparkleBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Core Insight Message Node container */
-        .galaxy-container {
-            width: 100%;
-            background: #05030f;
-            border-radius: 21px;
-            padding: 55px 45px;
-            box-sizing: border-box;
-            text-align: center;
-            min-height: 220px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Whimsical Text Typographies With Glow Elements */
-        .reason-text {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.55rem;
-            line-height: 1.8;
-            color: #ffffff;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            text-shadow: 0 0 6px rgba(255, 255, 255, 0.9), 0 0 15px #f43f5e, 0 0 25px #a855f7;
-            animation: driftUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes driftUp {
-            0% { transform: translateY(25px); opacity: 0; filter: blur(4px); }
-            100% { transform: translateY(0); opacity: 1; filter: blur(0); }
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .birthday-message { font-size: 1.05rem; }
-            .reason-text { font-size: 1.25rem; }
-            .dashboard { flex-direction: column; gap: 12px; text-align: center; }
-            .stat-group { align-items: center !important; text-align: center !important; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Unified Cosmic Background Engine -->
-    <canvas id="space-canvas"></canvas>
+    <div class="container">
+        <h1>Happy Birthday, Beautiful! 🎂</h1>
+        <p class="subtitle">One reason I love you, unlocked every single day.</p>
 
-    <!-- Stage 1: The Rocket Launch Button Pad -->
-    <div id="envelope-stage">
-        <div class="envelope-btn" onclick="launchRocket()">🚀</div>
-        <div class="envelope-hint">Launch into your universe</div>
-    </div>
-
-    <!-- Stage 2: Main Interface System Content -->
-    <div id="content-stage">
-        <h1>To my amaranthine. 🌌</h1>
-        <p class="birthday-message">Happy Birthday, my bunbun. These are some of the reasons why I love you.</p>
-        
-        <!-- Synchronized Cosmic Trackers -->
-        <div class="dashboard">
-            <div class="stat-group">
-                <div class="stat-label">Current Galaxy Day</div>
-                <div class="stat-value" id="day-counter">Day 1 / 243</div>
+        <div class="card" id="card">
+            <div id="lock-state">
+                <div class="envelope-icon" onclick="unlockMessage()">✉️</div>
+                <button class="btn" onclick="unlockMessage()">Open Today's Reason</button>
             </div>
-            <div class="stat-group" style="text-align: right;">
-                <div class="stat-label">Next Reason Unlocks In</div>
-                <div class="stat-value" id="countdown-timer">00h 00m 00s</div>
+            
+            <div class="message-text" id="message-text">
+                <!-- Message injected by JS -->
             </div>
         </div>
 
-        <!-- Sparkly Border Box Frame Wrapper -->
-        <div class="galaxy-border-wrap">
-            <div class="galaxy-container">
-                <div class="reason-text" id="daily-reason-display">
-                    Stardust mapping in progress...
-                </div>
-            </div>
+        <div class="timer-container" id="timer-container">
+            <div>Next reason unlocks in:</div>
+            <div class="timer" id="countdown">00:00:00</div>
         </div>
     </div>
 
     <script>
-        // --- 1. CORE DATA SOURCE ARRAY MAP (243 REASONS) ---
         const reasons = [
             "The way your eyes instantly crinkle up when you genuinely laugh out loud.",
             "How incredibly supportive you are, even when I'm stressing over the smallest things.",
@@ -504,197 +413,77 @@
             "These reasons are not just the only things in my mind but some of the things that I could say for now. The reasons I have to love you are countless, and I love all of those reasons. I love you with all my heart. Thank you for sticking till the end."
         ];
 
-        // --- 2. CELESTIAL TIMELINE SYSTEM ---
-        const launchDate = new Date("August 12, 2026 00:00:00");
+        const card = document.getElementById('card');
+        const lockState = document.getElementById('lock-state');
+        const messageText = document.getElementById('message-text');
+        const timerContainer = document.getElementById('timer-container');
+        const countdownElement = document.getElementById('countdown');
 
-        function updateDailyReason() {
+        function getTodayString() {
+            const d = new Date();
+            return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+        }
+
+        function checkStatus() {
+            const today = getTodayString();
+            const savedDate = localStorage.getItem('lastUnlockedDate');
+            const savedIndex = localStorage.getItem('currentReasonIndex');
+
+            if (savedDate === today && savedIndex !== null) {
+                displayMessage(savedIndex);
+            }
+        }
+
+        function unlockMessage() {
+            const today = getTodayString();
+            
             const now = new Date();
-            const diffTime = now - launchDate;
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
             
-            let currentDayIndex = 0;
-            let msUntilNextDay = 0;
+            const reasonIndex = dayOfYear % reasons.length;
 
-            if (diffTime < 0) {
-                currentDayIndex = 0;
-                msUntilNextDay = Math.abs(diffTime);
-            } else {
-                currentDayIndex = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                if (currentDayIndex >= 243) currentDayIndex = 242; 
-                
-                const nextDayTimestamp = launchDate.getTime() + ((currentDayIndex + 1) * 24 * 60 * 60 * 1000);
-                msUntilNextDay = nextDayTimestamp - now.getTime();
-            }
+            localStorage.setItem('lastUnlockedDate', today);
+            localStorage.setItem('currentReasonIndex', reasonIndex);
 
-            document.getElementById("day-counter").innerText = `Day ${currentDayIndex + 1} / 243`;
-            document.getElementById("daily-reason-display").innerText = reasons[currentDayIndex];
-
-            const timerElement = document.getElementById("countdown-timer");
-            if (diffTime >= (243 * 24 * 60 * 60 * 1000)) {
-                timerElement.innerText = "All unlocked! ✨";
-            } else {
-                const hours = Math.floor((msUntilNextDay % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((msUntilNextDay % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((msUntilNextDay % (1000 * 60)) / 1000);
-                timerElement.innerText = `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
-            }
-        }
-        setInterval(updateDailyReason, 1000);
-
-        // --- 3. ROCKET PROPULSION LAUNCH ENGINE ---
-        function launchRocket() {
-            const envStage = document.getElementById('envelope-stage');
-            const contentStage = document.getElementById('content-stage');
-
-            envStage.style.transform = 'translateY(-200vh) scale(0.5)';
-            envStage.style.opacity = '0';
-            
-            setTimeout(() => {
-                envStage.style.display = 'none';
-                contentStage.style.display = 'flex';
-                updateDailyReason();
-                setTimeout(() => {
-                    contentStage.style.opacity = '1';
-                }, 50);
-            }, 800);
+            displayMessage(reasonIndex);
         }
 
-        // --- 4. ADVANCED CELESTIAL BACKGROUND CANVAS RENDERING ENGINE ---
-        const canvas = document.getElementById('space-canvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        let asteroids = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initializeSpaceObjects();
-        }
-        window.addEventListener('resize', resizeCanvas);
-
-        function generateAsteroidVertices(radius, pointsCount) {
-            let vertices = [];
-            for (let i = 0; i < pointsCount; i++) {
-                let angle = (i / pointsCount) * Math.PI * 2;
-                let noise = 0.7 + Math.random() * 0.5; 
-                vertices.push({
-                    x: Math.cos(angle) * radius * noise,
-                    y: Math.sin(angle) * radius * noise,
-                    craterAngle: angle,
-                    craterDepth: Math.random() * (radius * 0.3)
-                });
-            }
-            return vertices;
+        function displayMessage(index) {
+            lockState.style.display = 'none';
+            messageText.innerText = `\"${reasons[index]}\"`;
+            messageText.style.display = 'block';
+            timerContainer.style.display = 'block';
+            startCountdown();
         }
 
-        function initializeSpaceObjects() {
-            stars = [];
-            asteroids = [];
+        function startCountdown() {
+            function updateTimer() {
+                const now = new Date();
+                const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+                const diff = tomorrow - now;
 
-            for (let i = 0; i < 120; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 1.5,
-                    alpha: Math.random(),
-                    speed: 0.05 + Math.random() * 0.15
-                });
-            }
-
-            asteroids.push({
-                x: canvas.width * 0.1, y: canvas.height * 0.3,
-                radius: 45, angle: 0, rotSpeed: 0.003,
-                driftY: 0, driftSpeed: 0.005,
-                vertices: generateAsteroidVertices(45, 12),
-                craters: [{r: 8, x: -10, y: -5}, {r: 5, x: 12, y: 15}, {r: 11, x: -5, y: 18}]
-            });
-
-            asteroids.push({
-                x: canvas.width * 0.88, y: canvas.height * 0.7,
-                radius: 60, angle: 1.2, rotSpeed: -0.002,
-                driftY: 0, driftSpeed: 0.004,
-                vertices: generateAsteroidVertices(60, 14),
-                craters: [{r: 12, x: 10, y: -10}, {r: 7, x: -20, y: 10}, {r: 6, x: 5, y: 22}]
-            });
-
-            if(canvas.width > 768) {
-                asteroids.push({
-                    x: canvas.width * 0.15, y: canvas.height * 0.8,
-                    radius: 25, angle: 3.4, rotSpeed: 0.005,
-                    driftY: 0, driftSpeed: 0.007,
-                    vertices: generateAsteroidVertices(25, 9),
-                    craters: [{r: 4, x: 2, y: -4}, {r: 3, x: -8, y: 6}]
-                });
-            }
-        }
-
-        function drawAsteroid(ast) {
-            ctx.save();
-            let dynamicY = ast.y + Math.sin(ast.driftY) * 20;
-            ctx.translate(ast.x, dynamicY);
-            ctx.rotate(ast.angle);
-
-            let rockGrad = ctx.createLinearGradient(-ast.radius, -ast.radius, ast.radius, ast.radius);
-            rockGrad.addColorStop(0, '#5c5366');
-            rockGrad.addColorStop(0.4, '#433b4d');
-            rockGrad.addColorStop(1, '#1e1924');
-
-            ctx.fillStyle = rockGrad;
-            ctx.beginPath();
-            ctx.moveTo(ast.vertices[0].x, ast.vertices[0].y);
-            for (let i = 1; i < ast.vertices.length; i++) {
-                ctx.lineTo(ast.vertices[i].x, ast.vertices[i].y);
-            }
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            ast.craters.forEach(crater => {
-                ctx.beginPath();
-                ctx.arc(crater.x, crater.y, crater.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(21, 16, 28, 0.6)';
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(crater.x, crater.y, crater.r, Math.PI * 1.2, Math.PI * 0.2);
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-            });
-
-            ctx.restore();
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i < stars.length; i++) {
-                let s = stars[i];
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-                ctx.fill();
-
-                s.y += s.speed;
-                if (s.y > canvas.height) {
-                    s.y = 0;
-                    s.x = Math.random() * canvas.width;
+                if (diff <= 0) {
+                    localStorage.removeItem('lastUnlockedDate');
+                    localStorage.removeItem('currentReasonIndex');
+                    location.reload();
+                    return;
                 }
+
+                const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+                countdownElement.innerText = `${hours}:${minutes}:${seconds}`;
             }
-
-            asteroids.forEach(ast => {
-                ast.angle += ast.rotSpeed;
-                ast.driftY += ast.driftSpeed;
-                drawAsteroid(ast);
-            });
-
-            requestAnimationFrame(animate);
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
         }
 
-        resizeCanvas();
-        animate();
+        checkStatus();
     </script>
 </body>
 </html>
