@@ -103,11 +103,25 @@
             font-family: 'Fredoka', sans-serif;
             font-size: 2.8rem;
             font-weight: 500;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             text-align: center;
             color: #ffffff;
             letter-spacing: 0.5px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 25px #7c3aed, 0 0 45px #db2777;
+        }
+
+        /* Whimsical Subtitle / Birthday Message */
+        .birthday-message {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #fca5a5; /* Soft stardust pink */
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+            text-shadow: 0 0 8px rgba(252, 165, 165, 0.5), 0 0 20px rgba(219, 39, 119, 0.4);
         }
 
         /* Universe Sync Trackers */
@@ -198,6 +212,7 @@
 
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
+            .birthday-message { font-size: 1.05rem; }
             .reason-text { font-size: 1.25rem; }
             .dashboard { flex-direction: column; gap: 12px; text-align: center; }
             .stat-group { align-items: center !important; text-align: center !important; }
@@ -218,6 +233,7 @@
     <!-- Stage 2: Main Interface System Content -->
     <div id="content-stage">
         <h1>To my amaranthine. 🌌</h1>
+        <p class="birthday-message">Happy Birthday, my bunbun. These are some of the reasons why I love you.</p>
         
         <!-- Synchronized Cosmic Trackers -->
         <div class="dashboard">
@@ -441,7 +457,7 @@
             "Your love for slow, quiet weekend mornings where there are absolutely no plans.",
             "The way you always make sure your close friends or family get home safe after a night out.",
             "How you get emotionally attached to video game characters or animal sidekicks.",
-            "The way you shake your head to clear your thoughts when you get stuck.",
+            "The way you shake a head to clear your thoughts when you get stuck.",
             "Your absolute obsession with cute mugs, candles, or throw blankets.",
             "The little victory fist-pump you do when you submit an assignment or project.",
             "How you always blow on food that clearly isn't hot anymore, just out of habit.",
@@ -548,12 +564,10 @@
         }
         window.addEventListener('resize', resizeCanvas);
 
-        // Procedural generator mapping points out unique rocky edge paths
         function generateAsteroidVertices(radius, pointsCount) {
             let vertices = [];
             for (let i = 0; i < pointsCount; i++) {
                 let angle = (i / pointsCount) * Math.PI * 2;
-                // Add extreme irregular noise profiles to the outer edges
                 let noise = 0.7 + Math.random() * 0.5; 
                 vertices.push({
                     x: Math.cos(angle) * radius * noise,
@@ -569,7 +583,6 @@
             stars = [];
             asteroids = [];
 
-            // Spawn standard drifting background starfield data
             for (let i = 0; i < 120; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
@@ -580,8 +593,6 @@
                 });
             }
 
-            // Spawn localized detailed structural textured asteroids
-            // Left Large Asteroid
             asteroids.push({
                 x: canvas.width * 0.1, y: canvas.height * 0.3,
                 radius: 45, angle: 0, rotSpeed: 0.003,
@@ -590,7 +601,6 @@
                 craters: [{r: 8, x: -10, y: -5}, {r: 5, x: 12, y: 15}, {r: 11, x: -5, y: 18}]
             });
 
-            // Right Giant Asteroid
             asteroids.push({
                 x: canvas.width * 0.88, y: canvas.height * 0.7,
                 radius: 60, angle: 1.2, rotSpeed: -0.002,
@@ -599,7 +609,6 @@
                 craters: [{r: 12, x: 10, y: -10}, {r: 7, x: -20, y: 10}, {r: 6, x: 5, y: 22}]
             });
 
-            // Mobile protective hidden medium cluster item
             if(canvas.width > 768) {
                 asteroids.push({
                     x: canvas.width * 0.15, y: canvas.height * 0.8,
@@ -613,12 +622,10 @@
 
         function drawAsteroid(ast) {
             ctx.save();
-            // Apply floating dynamic transformations smoothly
             let dynamicY = ast.y + Math.sin(ast.driftY) * 20;
             ctx.translate(ast.x, dynamicY);
             ctx.rotate(ast.angle);
 
-            // Create primary base shaded rock texture gradients
             let rockGrad = ctx.createLinearGradient(-ast.radius, -ast.radius, ast.radius, ast.radius);
             rockGrad.addColorStop(0, '#5c5366');
             rockGrad.addColorStop(0.4, '#433b4d');
@@ -633,20 +640,16 @@
             ctx.closePath();
             ctx.fill();
 
-            // Render shadow ridges directly along outer lines
             ctx.strokeStyle = 'rgba(255,255,255,0.08)';
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Draw individual crater textural layers
             ast.craters.forEach(crater => {
                 ctx.beginPath();
                 ctx.arc(crater.x, crater.y, crater.r, 0, Math.PI * 2);
-                // Dark interior shadows
                 ctx.fillStyle = 'rgba(21, 16, 28, 0.6)';
                 ctx.fill();
 
-                // Highlighted crater ridges rim maps
                 ctx.beginPath();
                 ctx.arc(crater.x, crater.y, crater.r, Math.PI * 1.2, Math.PI * 0.2);
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
@@ -660,7 +663,6 @@
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Process Star Array updates
             for (let i = 0; i < stars.length; i++) {
                 let s = stars[i];
                 ctx.beginPath();
@@ -675,7 +677,6 @@
                 }
             }
 
-            // Process Asteroid updates & render ticks
             asteroids.forEach(ast => {
                 ast.angle += ast.rotSpeed;
                 ast.driftY += ast.driftSpeed;
@@ -685,7 +686,6 @@
             requestAnimationFrame(animate);
         }
 
-        // Initialize setup variables instantly
         resizeCanvas();
         animate();
     </script>
