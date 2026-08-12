@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Favorite Person In The Universe 🌌</title>
+    <!-- Sharp Futuristic Space Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep-space: #050212;
-            --nebula-glow: #1a0b36;
-            --card-space-bg: rgba(18, 11, 43, 0.85);
+            --bg-deep-space: #03010a;
+            --nebula-glow: #13072b;
+            --card-space-bg: rgba(12, 7, 30, 0.9);
             --star-gold: #ffe600;
             --cosmic-pink: #ff2a85;
             --laser-cyan: #00f3ff;
-            --text-starlight: #fbf9ff;
-            --text-space-dust: #9b8eb3;
+            --text-starlight: #ffffff;
+            --text-space-dust: #a195bd;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace, system-ui;
+            font-family: 'Orbitron', 'Segoe UI', -apple-system, sans-serif;
         }
 
         body {
@@ -36,8 +38,8 @@
             position: relative;
         }
 
-        /* Layered Animated Starfield & Asteroids */
-        .galaxy-bg {
+        /* Re-engineered High-Definition Starfield & Asteroid Layer */
+        .galaxy-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
@@ -45,48 +47,20 @@
             overflow: hidden;
         }
 
-        .galaxy-bg::before, .galaxy-bg::after {
-            content: "";
+        .space-particle {
             position: absolute;
-            width: 200%; height: 200%;
-            top: -50%; left: -50%;
-            background-image: 
-                radial-gradient(circle, #fff 1px, transparent 1px),
-                radial-gradient(circle, rgba(255,42,133,0.4) 2px, transparent 40px),
-                radial-gradient(circle, #fff 1.5px, transparent 2px),
-                radial-gradient(circle, rgba(0,243,255,0.3) 2px, transparent 30px);
-            background-size: 150px 150px, 300px 300px, 200px 200px, 400px 400px;
-            animation: spaceDrift 120s linear infinite;
-            opacity: 0.6;
+            color: rgba(255, 255, 255, 0.8);
+            user-select: none;
         }
 
-        .galaxy-bg::after {
-            animation: spaceDrift 180s linear infinite reverse;
-            opacity: 0.4;
-        }
+        /* Cosmic Float Speeds for Depth */
+        .float-slow { animation: floatSpace 25s linear infinite alternate; }
+        .float-med { animation: floatSpace 18s linear infinite alternate-reverse; }
+        .float-fast { animation: floatSpace 12s linear infinite alternate; }
 
-        /* Floating Space Asteroids */
-        .asteroid {
-            position: absolute;
-            background: linear-gradient(135deg, #322356, #140d24);
-            border-radius: 40% 60% 50% 50% / 40% 40% 60% 50%;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.6), 0 0 15px rgba(155,142,179,0.2);
-            pointer-events: none;
-            animation: floatAsteroid 25s ease-in-out infinite alternate;
-        }
-
-        .ast-1 { width: 40px; height: 35px; top: 15%; left: 10%; animation-duration: 20s; }
-        .ast-2 { width: 25px; height: 28px; bottom: 20%; right: 8%; animation-duration: 32s; }
-        .ast-3 { width: 50px; height: 45px; top: 70%; left: 15%; animation-duration: 40s; opacity: 0.5; }
-
-        @keyframes spaceDrift {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes floatAsteroid {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-40px) rotate(45deg); }
+        @keyframes floatSpace {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); }
+            100% { transform: translateY(-50px) translateX(30px) rotate(360deg); }
         }
 
         .container {
@@ -98,19 +72,20 @@
         }
 
         h1 {
-            font-size: 2rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px var(--cosmic-pink), 0 0 20px rgba(255, 42, 133, 0.5);
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 12px var(--cosmic-pink), 0 0 25px rgba(255, 42, 133, 0.4);
             color: #fff;
         }
 
         .subtitle {
             color: var(--text-space-dust);
             margin-bottom: 35px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
         /* Sparkly Dynamic Cosmic Border Card */
@@ -119,8 +94,8 @@
             background: linear-gradient(45deg, var(--cosmic-pink), #ff9ebb, var(--laser-cyan), #bd42ff, var(--cosmic-pink));
             background-size: 400% 400%;
             border-radius: 24px;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.25), 0 0 50px rgba(255, 42, 133, 0.2);
-            animation: sparkleGlowBorder 8s linear infinite;
+            box-shadow: 0 0 35px rgba(0, 243, 255, 0.3), 0 0 60px rgba(255, 42, 133, 0.25);
+            animation: sparkleGlowBorder 6s linear infinite;
         }
 
         @keyframes sparkleGlowBorder {
@@ -132,32 +107,38 @@
         .card {
             background-color: var(--card-space-bg);
             border-radius: 20px;
-            padding: 45px 30px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            min-height: 270px;
+            padding: 50px 30px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            min-height: 280px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Launch System Components */
+        /* Launch Controls */
         .launch-control {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
             transition: all 0.5s ease;
         }
 
         .rocket-ship {
             font-size: 4.5rem;
             display: inline-block;
-            filter: drop-shadow(0 0 15px rgba(255,243,0,0.6));
+            filter: drop-shadow(0 0 15px rgba(255,243,0,0.7));
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .rocket-ship:hover {
+            transform: scale(1.08);
         }
 
         /* Rocket Blast Off Animation Class */
@@ -166,23 +147,23 @@
         }
 
         @keyframes blastOff {
-            0% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 15px rgba(255,243,0,0.6)); }
-            30% { transform: scale(0.9) translateY(15px); filter: drop-shadow(0 15px 25px var(--cosmic-pink)); }
-            100% { transform: scale(1.2) translateY(-600px); filter: drop-shadow(0 50px 50px #fff); opacity: 0; }
+            0% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 15px rgba(255,243,0,0.7)); }
+            30% { transform: scale(0.9) translateY(15px); filter: drop-shadow(0 15px 30px var(--cosmic-pink)); }
+            100% { transform: scale(1.2) translateY(-700px); filter: drop-shadow(0 50px 50px #fff); opacity: 0; }
         }
 
         .btn-launch {
             background: transparent;
             color: var(--laser-cyan);
             border: 2px solid var(--laser-cyan);
-            padding: 14px 30px;
-            font-size: 0.95rem;
-            font-weight: bold;
+            padding: 15px 35px;
+            font-size: 0.9rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.25);
             transition: all 0.3s ease;
         }
 
@@ -194,43 +175,57 @@
         }
 
         .message-text {
-            font-size: 1.15rem;
-            line-height: 1.7;
-            letter-spacing: 0.5px;
+            font-size: 1.1rem;
+            font-weight: 400;
+            line-height: 1.8;
+            letter-spacing: 1px;
             display: none;
             color: #fff;
-            text-shadow: 0 0 5px rgba(255,255,255,0.2);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
             animation: teleportIn 0.8s ease-out forwards;
         }
 
         @keyframes teleportIn {
-            from { opacity: 0; transform: scale(0.85); filter: blur(10px); }
+            from { opacity: 0; transform: scale(0.9); filter: blur(12px); }
             to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
         .timer-container {
             margin-top: 35px;
-            font-size: 0.85rem;
-            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-space-dust);
             display: none;
         }
 
         .timer {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+            font-weight: 900;
             color: var(--star-gold);
             margin-top: 8px;
-            text-shadow: 0 0 10px rgba(255, 230, 0, 0.4);
+            letter-spacing: 2px;
+            text-shadow: 0 0 12px rgba(255, 230, 0, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <div class="galaxy-bg">
-        <div class="asteroid ast-1"></div>
-        <div class="asteroid ast-2"></div>
-        <div class="asteroid ast-3"></div>
+    <!-- Visible Physical Background Elements -->
+    <div class="galaxy-container">
+        <!-- Asteroids -->
+        <div class="space-particle float-slow" style="font-size: 2.5rem; top: 12%; left: 8%;">☄️</div>
+        <div class="space-particle float-med" style="font-size: 1.8rem; bottom: 18%; right: 7%;">☄️</div>
+        <div class="space-particle float-fast" style="font-size: 2.2rem; top: 75%; left: 12%; opacity: 0.4;">☄️</div>
+        
+        <!-- Stars & Sparkles -->
+        <div class="space-particle float-med" style="font-size: 1.2rem; top: 25%; right: 15%;">⭐</div>
+        <div class="space-particle float-slow" style="font-size: 1rem; top: 5%; right: 40%;">✨</div>
+        <div class="space-particle float-fast" style="font-size: 1.5rem; bottom: 35%; left: 5%;">✨</div>
+        <div class="space-particle float-slow" style="font-size: 0.9rem; bottom: 8%; left: 45%;">⭐</div>
+        <div class="space-particle float-med" style="font-size: 1.3rem; top: 48%; right: 8%; opacity: 0.5;">✨</div>
+        <div class="space-particle float-fast" style="font-size: 1.1rem; top: 68%; right: 32%;">⭐</div>
     </div>
 
     <div class="container">
@@ -319,6 +314,19 @@
             "The sweet way you kiss the screen when we have to say goodnight.",
             "How you look when you're focusing on a game we're playing together.",
             "The beautiful clarity of your voice over my earphones when everything else is loud.",
+            "Your cute habit of hiding behind the comments whenever we watch something spooky on TikTok.",
+            "How you always make sure that there is enough food for you and I.",
+            "Your obsession with scallops.",
+            "The tiny and quiet crunching noises you make when eating chips.",
+            "Your habit of treating your stationery like absolute gold.",
+            "How you look on video calls when you accidentally turn the front camera on from a low angle.",
+            "The cute little bounce in your step when you're walking towards something cute and exciting.",
+            "The beautiful imagination that makes you appreciate the little things around you.",
+            "How you look offended when a restaurant runs out of your favorite menu item.",
+            "How you listen to my long ass rants with absolute patience.",
+            "The cute way you chew your food when you're focused on a TV show or movie.",
+            "The way you count the days down with me, making the distance feel smaller every day.",
+            "The beautiful ways you always text me \"Good morning\" and \"Good night\" without fail.",
             "Your cute habit of sometimes matching your status with mine.",
             "The pure, childlike joy on your face when your favorite comfort food is sitting right in front of you.",
             "How you always double- or triple-check your work just to be absolutely certain.",
@@ -498,13 +506,13 @@
         const rocketIcon = document.getElementById('rocket-icon');
 
         function getCurrentDayIndex() {
-            let firstDateStr = localStorage.getItem('countdownFirstStartDate');
+            let firstDateStr = localStorage.getItem('countdownFirstStartDate_v2');
             const today = new Date();
             today.setHours(0,0,0,0);
 
             if (!firstDateStr) {
                 firstDateStr = today.toISOString();
-                localStorage.setItem('countdownFirstStartDate', firstDateStr);
+                localStorage.setItem('countdownFirstStartDate_v2', firstDateStr);
             }
 
             const startDate = new Date(firstDateStr);
@@ -533,10 +541,7 @@
         }
 
         function triggerLaunchAnimation() {
-            // Add launching class to execute CSS rocket blastoff
             rocketIcon.classList.add('rocket-launching');
-            
-            // Wait for rocket to fly off-screen before unlocking text
             setTimeout(() => {
                 unlockMessage();
             }, 650);
