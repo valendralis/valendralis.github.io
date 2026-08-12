@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To my amaranthine. 🌌</title>
     <style>
-        /* Base Cosmic Styling */
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@500;700&display=swap');
+
+        /* Cosmic Galaxy Backdrop */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             min-height: 100vh;
-            background: radial-gradient(circle at center, #0d0826 0%, #050311 70%, #010005 100%);
+            background: radial-gradient(circle at center, #0f0c20 0%, #070414 60%, #020108 100%);
             color: #f1f5f9;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Fixed Background Canvas for Animated Stars */
+        /* Starfield & Environment Backgrounds */
         #starfield {
             position: fixed;
             top: 0;
@@ -31,88 +33,116 @@
             pointer-events: none;
         }
 
-        /* Envelope Overlay Stage */
+        /* Asteroid Layout Belts */
+        .asteroid {
+            position: fixed;
+            background: radial-gradient(circle at 30% 30%, #5b5266, #2d2536);
+            border-radius: 30% 70% 70% 30% / 30% 40% 60% 70%;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1;
+            pointer-events: none;
+            animation: floatAsteroid 12s ease-in-out infinite alternate;
+        }
+        .ast-left { left: 4%; top: 25%; width: 65px; height: 55px; animation-delay: 0s; }
+        .ast-right { right: 5%; bottom: 20%; width: 80px; height: 75px; animation-delay: -3s; }
+        .ast-small { left: 8%; bottom: 15%; width: 35px; height: 32px; animation-delay: -1.5s; }
+
+        @keyframes floatAsteroid {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(15deg); }
+        }
+
+        /* Launch Pad / Rocket Stage */
         #envelope-stage {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045);
         }
 
         .envelope-btn {
-            background: rgba(139, 92, 246, 0.2);
-            border: 2px solid #a78bfa;
+            background: rgba(124, 58, 237, 0.15);
+            border: 2px dashed #c084fc;
             border-radius: 50%;
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 3.5rem;
+            font-size: 4rem;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(167, 139, 250, 0.4), inset 0 0 15px rgba(167, 139, 250, 0.3);
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.3), inset 0 0 20px rgba(147, 51, 234, 0.2);
             transition: all 0.4s ease;
+            animation: rocketHover 3s ease-in-out infinite;
         }
 
         .envelope-btn:hover {
-            transform: scale(1.1) rotate(-5deg);
-            box-shadow: 0 0 35px rgba(167, 139, 250, 0.8), inset 0 0 25px rgba(167, 139, 250, 0.5);
+            transform: scale(1.15);
+            border-style: solid;
+            box-shadow: 0 0 50px rgba(192, 132, 252, 0.8), inset 0 0 25px rgba(192, 132, 252, 0.4);
+        }
+
+        @keyframes rocketHover {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .envelope-hint {
-            margin-top: 20px;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            color: #a78bfa;
-            text-shadow: 0 0 8px rgba(167, 139, 250, 0.5);
-            text-transform: uppercase;
-            animation: pulse 2s infinite alternate;
+            margin-top: 25px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1.5px;
+            color: #c084fc;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.6);
+            animation: pulseText 2s infinite alternate;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; text-shadow: 0 0 15px rgba(167, 139, 250, 0.8); }
+        @keyframes pulseText {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; text-shadow: 0 0 18px #c084fc; }
         }
 
-        /* Main Content Stage (Hidden Initially) */
+        /* Core Web Application Viewport */
         #content-stage {
             position: relative;
-            z-index: 1;
-            max-width: 700px;
+            z-index: 5;
+            max-width: 680px;
             width: 90%;
             display: none;
             opacity: 0;
             flex-direction: column;
             align-items: center;
-            transition: opacity 1s ease;
+            transition: opacity 1.2s ease;
         }
 
-        /* Glowing Galaxy Title */
+        /* Whimsical Galaxy Header */
         h1 {
+            font-family: 'Fredoka', sans-serif;
             font-size: 2.8rem;
-            margin-bottom: 30px;
+            font-weight: 500;
+            margin-bottom: 25px;
             text-align: center;
             color: #ffffff;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 25px rgba(139, 92, 246, 0.6);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 25px #7c3aed, 0 0 45px #db2777;
         }
 
-        /* Dashboard Tracker Card */
+        /* Universe Sync Trackers */
         .dashboard {
-            background: rgba(17, 12, 46, 0.5);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 12px;
-            padding: 12px 25px;
+            background: rgba(11, 7, 34, 0.65);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 16px;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
             box-sizing: border-box;
-            margin-bottom: 25px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .stat-group {
@@ -121,74 +151,103 @@
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: #a78bfa;
+            font-family: 'Fredoka', sans-serif;
+            margin-bottom: 4px;
         }
 
         .stat-value {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: #ffffff;
+            text-shadow: 0 0 8px rgba(255,255,255,0.3);
         }
 
-        /* Single Reason Celestial Display Container */
+        /* Sparkly Outline Custom Wrapper Border Box */
+        .galaxy-border-wrap {
+            width: 100%;
+            padding: 3px;
+            border-radius: 24px;
+            background: linear-gradient(45deg, #a855f7, #f43f5e, #3b82f6, #ec4899, #a855f7);
+            background-size: 300% 300%;
+            animation: cosmicSparkleBorder 5s ease infinite;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), 0 0 60px rgba(244, 63, 94, 0.25);
+            box-sizing: border-box;
+        }
+
+        @keyframes cosmicSparkleBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Core Insight Message Node container */
         .galaxy-container {
             width: 100%;
-            background: rgba(8, 5, 24, 0.75);
-            border: 1px solid rgba(139, 92, 246, 0.25);
-            border-radius: 20px;
-            padding: 50px 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(139, 92, 246, 0.15);
-            backdrop-filter: blur(12px);
+            background: #05030f;
+            border-radius: 21px;
+            padding: 55px 45px;
             box-sizing: border-box;
             text-align: center;
-            min-height: 200px;
+            min-height: 220px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        /* Whimsical Text Typographies With Glow Elements */
         .reason-text {
-            font-size: 1.5rem;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.55rem;
             line-height: 1.8;
-            color: #f1f5f9;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            animation: floatIn 1s ease out;
+            color: #ffffff;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.9), 0 0 15px #f43f5e, 0 0 25px #a855f7;
+            animation: driftUp 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes floatIn {
-            0% { transform: translateY(10px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+        @keyframes driftUp {
+            0% { transform: translateY(25px); opacity: 0; filter: blur(4px); }
+            100% { transform: translateY(0); opacity: 1; filter: blur(0); }
         }
 
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
-            .reason-text { font-size: 1.2rem; }
-            .dashboard { flex-direction: column; gap: 10px; text-align: center; }
+            .reason-text { font-size: 1.25rem; }
+            .dashboard { flex-direction: column; gap: 12px; text-align: center; }
+            .stat-group { align-items: center !important; text-align: center !important; }
+            .asteroid { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Stars Canvas Background -->
+    <!-- Space Background Layer -->
     <canvas id="starfield"></canvas>
 
-    <!-- Stage 1: The Envelope -->
+    <!-- Side Decoration Elements: Asteroids -->
+    <div class="asteroid interstate ast-left"></div>
+    <div class="asteroid interstate ast-right"></div>
+    <div class="asteroid interstate ast-small"></div>
+
+    <!-- Stage 1: The Rocket Launch Button Pad -->
     <div id="envelope-stage">
-        <div class="envelope-btn" onclick="openEnvelope()">✉️</div>
-        <div class="envelope-hint">Click to open your universe</div>
+        <div class="envelope-btn" onclick="launchRocket()">🚀</div>
+        <div class="envelope-hint">Launch into your universe</div>
     </div>
 
-    <!-- Stage 2: The Core Webpage Content -->
+    <!-- Stage 2: Main Interface System Content -->
     <div id="content-stage">
         <h1>To my amaranthine. 🌌</h1>
         
-        <!-- Live Status Metrics -->
+        <!-- Synchronized Cosmic Trackers -->
         <div class="dashboard">
             <div class="stat-group">
-                <div class="stat-label">Current Universe Day</div>
+                <div class="stat-label">Current Galaxy Day</div>
                 <div class="stat-value" id="day-counter">Day 1 / 365</div>
             </div>
             <div class="stat-group" style="text-align: right;">
@@ -197,16 +256,18 @@
             </div>
         </div>
 
-        <!-- Single Active Daily Container Box -->
-        <div class="galaxy-container">
-            <div class="reason-text" id="daily-reason-display">
-                Loading starlight reason...
+        <!-- Sparkly Border Box Frame Wrapper Wrapper -->
+        <div class="galaxy-border-wrap">
+            <div class="galaxy-container">
+                <div class="reason-text" id="daily-reason-display">
+                    Stardust mapping in progress...
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. CORE CONFIGURATION DATA (365 REASONS) ---
+        // --- 1. CORE DATA SOURCE ARRAY MAP (365 REASONS) ---
         const reasons = [
             "The exact length of your hair and how it feels running through my fingers.",
             "The way you always save the absolute best bite of your meal for the very end.",
@@ -442,175 +503,41 @@
             "The way you always text me random updates about your day just to keep me included.",
             "How your face completely brightens the second you see a puppy or animal.",
             "The way you tie your hair up in a messy bun the exact second you need to get things done.",
-            "Your habit of fixing other people's clothes or stray hairs out of pure care.",
-            "The way your skin always feels naturally warmer than mine.",
-            "How you look when you're standing in front of a giant bookshelf trying to pick a title.",
-            "The tiny, quiet crunching noises you make when eating potato chips.",
-            "Your habit of planning your next meal while you are actively eating your current one.",
-            "The way your eyes light up entirely when you see a dessert menu.",
-            "How you always get the words to popular songs slightly wrong but sing them with confidence.",
-            "The way your eyelashes look when you are looking down at your phone.",
-            "Your unique collection of mismatched, colorful fuzzy socks.",
-            "The way you look completely elegant even when you are wearing sweatpants.",
-            "How you always hold a stuffed animal or an extra pillow tight to your chest.",
-            "The sweet little smile you have on your face right before you fully wake up.",
-            "Your love for slow, quiet weekend mornings where there are absolutely no plans.",
-            "The way you look when you're focusing on a game we are playing together.",
-            "How you always check to see if I'm home safe before you allow yourself to go to sleep.",
-            "The beautiful, soft hum you make when you are content with how a day turned out.",
-            "Your habit of picking out certain ingredients you don't like and piling them on the side.",
-            "The way you prop your chin up right next to the phone camera so it feels like you're close.",
-            "How you always listen to my long, audio rants with absolute patience.",
-            "The way you clean your phone screen on your shirt with absolute focus.",
-            "Your cute habit of matching your status or profile aesthetics with mine.",
-            "The pure, childlike joy on your face when your favorite comfort food is sitting in front of you.",
-            "How you always double and triple check your work just to be absolutely certain.",
-            "The little face you make when you try a food that is way too sour or spicy.",
-            "Your habit of memorizing random quotes from movies we watch together.",
-            "The way you listen to one single song on repeat for an entire week until you hate it.",
-            "How you look when you're walking through a museum or art gallery with quiet awe.",
-            "The way you tap your steering wheel or foot to the beat of the music.",
-            "Your love for breakfast foods at literal midnight.",
-            "How your eyelashes look when you are looking down at your phone.",
-            "The tiny, quiet groans you make when your morning alarm goes off.",
-            "The way you put on lip balm with absolute precision, pressing your lips together twice.",
-            "Your habit of writing in the most neat, aesthetic handwriting.",
-            "The way your eyes completely crinkle at the corners when you laugh genuinely.",
-            "Your cute routine of setting up your room to look perfectly cozy before relaxing.",
-            "How you always make me feel like the most important person in the world.",
-            "The unique, beautiful laugh that is my absolute favorite sound on earth.",
-            "Your kind, selfless heart that constantly inspires me to be a better human being.",
-            "The way you look at me over the camera like you see right into my soul.",
-            "Your absolute patience with my flaws and your belief in my dreams.",
-            "The way your hand feels completely, perfectly empty without mine.",
-            "How you make every single mile of this long-distance relationship worth it.",
-            "The beautiful, undeniable fact that I am entirely, completely in love with you.",
-            "The cute way you look when you try to speak through a yawn.",
-            "Your habit of completely losing your hair tie somewhere in the bedsheets overnight.",
-            "The way you always say \"thank you\" to service staff with the most genuine smile.",
-            "How you always get the words to popular songs slightly wrong but sing them with 100% confidence.",
-            "The tiny goosebumps you get when you step out of bed onto a cold floor.",
-            "Your love for cozying up with a heating pad or blanket before starting a movie marathon.",
-            "The way you look up at the ceiling when trying to remember a specific word.",
-            "How you get intensely competitive during board games or Mario Kart.",
-            "The way you always try to guess the ending of a movie twenty minutes into it.",
-            "Your love for obscure documentaries or random deep-dive video essays.",
-            "The cute little shiver you do when a cold draft of wind hits you suddenly.",
-            "How you look genuinely enchanted whenever you see fairy lights or sparkly decorations.",
-            "The way your hair naturally curves or frames your face when you aren't trying.",
-            "Your habit of reading the entire Wikipedia plot summary of a movie before watching it.",
-            "The way you remember the exact time zones and calculation changes for my schedule.",
-            "How your collarbones look when you wear your favorite scoop-neck shirts.",
-            "The cute little pocket of baby hairs at the base of your neck.",
-            "Your sweet habit of sending me old photos of us to remind me of our physical trips.",
-            "The way you send a single punctuation mark like \"?\" when I'm taking too long to reply.",
-            "How you always organize your shoes in a perfectly neat row near the doorway.",
-            "The cute way your toes curl up when you are laughing hysterically on the bed.",
-            "Your unique collection of mismatched, colorful fuzzy socks.",
-            "The way you bitingly hold your lip when you are writing or typing something important.",
-            "How you look when you're trying to walk gracefully over a patch of slippery ice or mud.",
-            "The way you always offer virtual hugs via text that genuinely feel real.",
-            "Your incredible resilience and dedication to keeping our connection so strong.",
-            "The pure, unfiltered happiness I feel every time your name lights up my phone.",
-            "Your absolute refusal to eat the crusts on certain types of bread or pizza.",
-            "The way you fold your clothes with absolute retail-store precision.",
-            "How you always stay committed to wearing the absolute oversized, comfiest shirts to sleep.",
-            "The way you look over your notes with a look of pure, quiet competence.",
-            "Your habit of checking the back of food labels, even for snacks you buy all the time.",
-            "The way you hold your breath for a second before taking a sip of a really hot soup.",
-            "How you always remember people's birthdays and make them feel special.",
-            "The way your knuckles look when you clench your fists in mock anger.",
-            "Your absolute hatred for when clothes tags scratch the back of your neck.",
-            "The cute way you stretch your arms all the way over your head when yawning.",
-            "How you always hoard the ice cubes at the bottom of your drink cup.",
-            "The way you adjust your chair height multiple times until it's perfectly level.",
-            "Your cute habit of talking out loud to yourself to solve a difficult problem.",
-            "The way you hold your notebooks tightly to your chest when moving between rooms.",
-            "How you always clear your throat right before starting a difficult task.",
-            "The tiny, subtle birthmark on your arm that looks like a hidden constellation.",
-            "Your habit of organizing your closet by clothing type and aesthetic color scheme.",
-            "The way you hold a physical book open with both thumbs at the bottom of the page.",
-            "How you always leave voice notes where you completely forget what you were saying halfway down.",
-            "The cute way you look when you're trying to chew a massive piece of bubblegum.",
-            "Your love for slow, quiet weekend mornings where there are absolutely no plans.",
-            "The way you always make sure your close friends or family get home safe after a night out.",
-            "How you get emotionally attached to video game characters or animal sidekicks.",
-            "The way you shake your head to clear your thoughts when you get stuck.",
-            "Your absolute obsession with cute mugs, candles, or throw blankets.",
-            "The little victory fist-pump you do when you submit an assignment or project.",
-            "How you always blow on food that clearly isn't hot anymore, just out of habit.",
-            "The way your shoulders drop when you take a big, relieved sigh of relief.",
-            "Your habit of leaving a cute little stack of sticky notes all over your laptop or desk.",
-            "The way you send me a link to a song with a note saying, \"This made me think of you.\"",
-            "How you look when you're trying to take a perfect aesthetic photo of your food or scenery.",
-            "The cute way your hand fits perfectly inside mine, filling every gap.",
-            "Your love for curated style boards full of beautiful aesthetics and dream homes.",
-            "The way you rest your chin in your hands while waiting for your breakfast to heat up.",
-            "How you look completely content when you're just sitting in your pajamas doing nothing.",
-            "The beautiful, soft hum you make when you are content with how a day turned out.",
-            "Your custom, highly complicated personalized drink order.",
-            "The way you get defensive when I tease you about your absolute guilty pleasure reality shows.",
-            "How you always complain about being tired but refuse to go to bed early.",
-            "The quiet way you breathe when you are taking a quick afternoon nap.",
-            "Your habit of letting out a completely satisfied sigh when you cross an item off your to-do list.",
-            "The way you hide your face behind a pillow or blanket during scary movie scenes.",
-            "How your nose scrunches up completely whenever you're confused or teasing me.",
-            "The way you look when you're wrapped from head to toe in a giant plush towel.",
-            "Your cute habit of double-checking that the front door is locked at least twice.",
-            "The way you look over the bottom of your mugs when you take a long, slow sip.",
-            "How you always manage to tangle yourself completely in the blankets like a burrito.",
-            "The beautiful ambition that drives everything you do every single day.",
-            "Your habit of checking behind the shower curtain for intruders every single time.",
-            "The way you look when you're trying to focus deeply on a brand new project.",
-            "How you get genuinely excited about grocery shopping for fun.",
-            "The way you keep an organized chaos of having forty different browser tabs open at once.",
-            "Your habit of looking out the window for a solid minute just to check the sky.",
-            "The soft curve of your waist that feels like it was custom-made for my hands.",
-            "How you always need a sweet treat right after eating a savory meal.",
-            "The way you wave to people with your entire arm, full of pure enthusiasm.",
-            "Your absolute, fierce protection over your favorite fictional characters.",
-            "The way you always text me random updates about your day just to keep me included.",
-            "How your face completely brightens the second you see a puppy or animal.",
-            "The way you tie your hair up in a messy bun the exact second you need to get things done.",
             "Your habit of fixing other people's clothes or stray hairs out of pure care."
         ];
 
-        // --- 2. TIME ENGINE (1 REASON PER DAY CALCULATION) ---
-        // Change this variable to your designated project Day 1 Launch date
+        // --- 2. CELESTIAL TIMELINE SYSTEM ---
+        // Dynamically calibrated to launch exactly on August 12, 2026!
         const launchDate = new Date("August 12, 2026 00:00:00");
 
         function updateDailyReason() {
             const now = new Date();
-            
-            // Calculate total time differences in milliseconds
             const diffTime = now - launchDate;
             
             let currentDayIndex = 0;
             let msUntilNextDay = 0;
 
             if (diffTime < 0) {
-                // If it's before the official launch date, default show Day 1
+                // Pre-launch safeguards: displays first message item fallback
                 currentDayIndex = 0;
                 msUntilNextDay = Math.abs(diffTime);
             } else {
-                // Determine current day number (1-365) via mathematical step floors
+                // Process index based on real-time elapsed 24hr loops
                 currentDayIndex = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                 
-                // Keep capping loop protection if tracking exceeds 365 indexing boundaries
                 if (currentDayIndex >= 365) {
-                    currentDayIndex = 364; 
+                    currentDayIndex = 364; // Cap boundary to structural limit
                 }
                 
-                // Compute remaining milestone time step to next exact 24hr loop window
                 const nextDayTimestamp = launchDate.getTime() + ((currentDayIndex + 1) * 24 * 60 * 60 * 1000);
                 msUntilNextDay = nextDayTimestamp - now.getTime();
             }
 
-            // Render Content Values onto UI
+            // Sync structural parameters to UI
             document.getElementById("day-counter").innerText = `Day ${currentDayIndex + 1} / 365`;
             document.getElementById("daily-reason-display").innerText = reasons[currentDayIndex];
 
-            // Render Countdown UI String
+            // Setup timer formatting counters
             const timerElement = document.getElementById("countdown-timer");
             if (diffTime >= (365 * 24 * 60 * 60 * 1000)) {
                 timerElement.innerText = "All unlocked! ✨";
@@ -622,22 +549,22 @@
             }
         }
 
-        // Run the logic ticks once a second continuously
+        // Keep loop execution synchronized every second
         setInterval(updateDailyReason, 1000);
 
 
-        // --- 3. ENVELOPE INTERACTION INTERFACE FUNCTION ---
-        function openEnvelope() {
+        // --- 3. ROCKET PROPULSION LAUNCH ENGINE ---
+        function launchRocket() {
             const envStage = document.getElementById('envelope-stage');
             const contentStage = document.getElementById('content-stage');
 
+            // Fly upward into deep space simulation animation path
+            envStage.style.transform = 'translateY(-200vh) scale(0.5)';
             envStage.style.opacity = '0';
-            envStage.style.transform = 'scale(0.8)';
             
             setTimeout(() => {
                 envStage.style.display = 'none';
                 contentStage.style.display = 'flex';
-                // Trigger dynamic execution update step to instantly avoid text flicker placeholders
                 updateDailyReason();
                 setTimeout(() => {
                     contentStage.style.opacity = '1';
@@ -646,11 +573,11 @@
         }
 
 
-        // --- 4. CANVAS DRIFTING STARFIELD SCRIPT ---
+        // --- 4. GALAXY AMBIENT STARFIELD RENDERER ---
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
-        const numStars = 120;
+        const numStars = 140;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -663,9 +590,9 @@
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                radius: Math.random() * 1.5,
+                radius: Math.random() * 1.8,
                 alpha: Math.random(),
-                speed: 0.1 + Math.random() * 0.2
+                speed: 0.05 + Math.random() * 0.15
             });
         }
 
@@ -678,6 +605,7 @@
                 ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
                 ctx.fill();
 
+                // Gentle space drift downward flow layout
                 s.y += s.speed;
                 if (s.y > canvas.height) {
                     s.y = 0;
