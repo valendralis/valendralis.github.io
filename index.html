@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Person ❤️</title>
+    <title>For My Favorite Person In The Universe 🌌</title>
     <style>
         :root {
-            --bg-color: #0f0c1b;
-            --card-bg: #1d1830;
-            --accent: #ff477e;
-            --accent-glow: rgba(255, 71, 126, 0.4);
-            --text-main: #f3f0fc;
-            --text-muted: #a39cb5;
+            --bg-deep-space: #050212;
+            --nebula-glow: #1a0b36;
+            --card-space-bg: rgba(18, 11, 43, 0.85);
+            --star-gold: #ffe600;
+            --cosmic-pink: #ff2a85;
+            --laser-cyan: #00f3ff;
+            --text-starlight: #fbf9ff;
+            --text-space-dust: #9b8eb3;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace, system-ui;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background: radial-gradient(circle at center, var(--nebula-glow) 0%, var(--bg-deep-space) 100%);
+            color: var(--text-starlight);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -34,22 +36,61 @@
             position: relative;
         }
 
-        /* Subtle background stars */
-        body::before {
-            content: "";
+        /* Layered Animated Starfield & Asteroids */
+        .galaxy-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
-            background-size: 550px 550px, 350px 350px;
-            background-position: 0 0, 40px 60px;
-            opacity: 0.2;
+            pointer-events: none;
             z-index: 0;
+            overflow: hidden;
+        }
+
+        .galaxy-bg::before, .galaxy-bg::after {
+            content: "";
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background-image: 
+                radial-gradient(circle, #fff 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,42,133,0.4) 2px, transparent 40px),
+                radial-gradient(circle, #fff 1.5px, transparent 2px),
+                radial-gradient(circle, rgba(0,243,255,0.3) 2px, transparent 30px);
+            background-size: 150px 150px, 300px 300px, 200px 200px, 400px 400px;
+            animation: spaceDrift 120s linear infinite;
+            opacity: 0.6;
+        }
+
+        .galaxy-bg::after {
+            animation: spaceDrift 180s linear infinite reverse;
+            opacity: 0.4;
+        }
+
+        /* Floating Space Asteroids */
+        .asteroid {
+            position: absolute;
+            background: linear-gradient(135deg, #322356, #140d24);
+            border-radius: 40% 60% 50% 50% / 40% 40% 60% 50%;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.6), 0 0 15px rgba(155,142,179,0.2);
+            pointer-events: none;
+            animation: floatAsteroid 25s ease-in-out infinite alternate;
+        }
+
+        .ast-1 { width: 40px; height: 35px; top: 15%; left: 10%; animation-duration: 20s; }
+        .ast-2 { width: 25px; height: 28px; bottom: 20%; right: 8%; animation-duration: 32s; }
+        .ast-3 { width: 50px; height: 45px; top: 70%; left: 15%; animation-duration: 40s; opacity: 0.5; }
+
+        @keyframes spaceDrift {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes floatAsteroid {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-40px) rotate(45deg); }
         }
 
         .container {
-            max-width: 500px;
+            max-width: 520px;
             width: 100%;
             text-align: center;
             z-index: 1;
@@ -57,112 +98,160 @@
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
+            letter-spacing: 2px;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff477e, #ff85a2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px var(--cosmic-pink), 0 0 20px rgba(255, 42, 133, 0.5);
+            color: #fff;
         }
 
         .subtitle {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 1rem;
+            color: var(--text-space-dust);
+            margin-bottom: 35px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Sparkly Dynamic Cosmic Border Card */
+        .card-border-wrap {
+            padding: 4px;
+            background: linear-gradient(45deg, var(--cosmic-pink), #ff9ebb, var(--laser-cyan), #bd42ff, var(--cosmic-pink));
+            background-size: 400% 400%;
+            border-radius: 24px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.25), 0 0 50px rgba(255, 42, 133, 0.2);
+            animation: sparkleGlowBorder 8s linear infinite;
+        }
+
+        @keyframes sparkleGlowBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .card {
-            background-color: var(--card-bg);
+            background-color: var(--card-space-bg);
             border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 40px var(--accent-glow);
-            border: 1px solid rgba(255, 71, 126, 0.2);
-            transition: all 0.4s ease;
-            min-height: 250px;
+            padding: 45px 30px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            min-height: 270px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .envelope-icon {
-            font-size: 4rem;
+        /* Launch System Components */
+        .launch-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .rocket-ship {
+            font-size: 4.5rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px rgba(255,243,0,0.6));
             cursor: pointer;
-            transition: transform 0.3s ease;
         }
 
-        .envelope-icon:hover {
-            transform: scale(1.1) rotate(-5deg);
+        /* Rocket Blast Off Animation Class */
+        .rocket-launching {
+            animation: blastOff 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+        }
+
+        @keyframes blastOff {
+            0% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 15px rgba(255,243,0,0.6)); }
+            30% { transform: scale(0.9) translateY(15px); filter: drop-shadow(0 15px 25px var(--cosmic-pink)); }
+            100% { transform: scale(1.2) translateY(-600px); filter: drop-shadow(0 50px 50px #fff); opacity: 0; }
+        }
+
+        .btn-launch {
+            background: transparent;
+            color: var(--laser-cyan);
+            border: 2px solid var(--laser-cyan);
+            padding: 14px 30px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-launch:hover {
+            background: var(--laser-cyan);
+            color: var(--bg-deep-space);
+            box-shadow: 0 0 25px var(--laser-cyan);
+            transform: translateY(-2px);
         }
 
         .message-text {
-            font-size: 1.3rem;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            letter-spacing: 0.5px;
             display: none;
-            animation: fadeIn 0.6s ease forwards;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255,255,255,0.2);
+            animation: teleportIn 0.8s ease-out forwards;
         }
 
-        .btn {
-            background: linear-gradient(135deg, #ff477e, #ff7096);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 71, 126, 0.6);
-        }
-
-        .btn:active {
-            transform: translateY(1px);
+        @keyframes teleportIn {
+            from { opacity: 0; transform: scale(0.85); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
         .timer-container {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+            margin-top: 35px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-space-dust);
             display: none;
         }
 
         .timer {
-            font-family: monospace;
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-top: 5px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            font-size: 1.3rem;
+            color: var(--star-gold);
+            margin-top: 8px;
+            text-shadow: 0 0 10px rgba(255, 230, 0, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Happy Birthday, Beautiful! 🎂</h1>
-        <p class="subtitle" id="dynamic-subtitle">One reason I love you, unlocked every single day.</p>
+    <div class="galaxy-bg">
+        <div class="asteroid ast-1"></div>
+        <div class="asteroid ast-2"></div>
+        <div class="asteroid ast-3"></div>
+    </div>
 
-        <div class="card" id="card">
-            <div id="lock-state">
-                <div class="envelope-icon" onclick="unlockMessage()">✉️</div>
-                <button class="btn" onclick="unlockMessage()">Open Today's Reason</button>
-            </div>
-            
-            <div class="message-text" id="message-text">
-                <!-- Message injected by JS -->
+    <div class="container">
+        <h1>GALAXY LOGS 🎂</h1>
+        <p class="subtitle" id="dynamic-subtitle">TRANSMITTING LOVE DATA ACROSS SPACE...</p>
+
+        <div class="card-border-wrap">
+            <div class="card" id="card">
+                <div id="lock-state" class="launch-control">
+                    <div class="rocket-ship" id="rocket-icon" onclick="triggerLaunchAnimation()">🚀</div>
+                    <button class="btn-launch" onclick="triggerLaunchAnimation()">LAUNCH CAPSULE</button>
+                </div>
+                
+                <div class="message-text" id="message-text">
+                    <!-- Space data reason injected by JS -->
+                </div>
             </div>
         </div>
 
         <div class="timer-container" id="timer-container">
-            <div id="timer-label">Next reason unlocks in:</div>
+            <div id="timer-label">Next Orbit Unlocks In:</div>
             <div class="timer" id="countdown">00:00:00</div>
         </div>
     </div>
@@ -230,19 +319,6 @@
             "The sweet way you kiss the screen when we have to say goodnight.",
             "How you look when you're focusing on a game we're playing together.",
             "The beautiful clarity of your voice over my earphones when everything else is loud.",
-            "Your cute habit of hiding behind the comments whenever we watch something spooky on TikTok.",
-            "How you always make sure that there is enough food for you and I.",
-            "Your obsession with scallops.",
-            "The tiny and quiet crunching noises you make when eating chips.",
-            "Your habit of treating your stationery like absolute gold.",
-            "How you look on video calls when you accidentally turn the front camera on from a low angle.",
-            "The cute little bounce in your step when you're walking towards something cute and exciting.",
-            "The beautiful imagination that makes you appreciate the little things around you.",
-            "How you look offended when a restaurant runs out of your favorite menu item.",
-            "How you listen to my long ass rants with absolute patience.",
-            "The cute way you chew your food when you're focused on a TV show or movie.",
-            "The way you count the days down with me, making the distance feel smaller every day.",
-            "The beautiful ways you always text me \"Good morning\" and \"Good night\" without fail.",
             "Your cute habit of sometimes matching your status with mine.",
             "The pure, childlike joy on your face when your favorite comfort food is sitting right in front of you.",
             "How you always double- or triple-check your work just to be absolutely certain.",
@@ -419,16 +495,14 @@
         const timerContainer = document.getElementById('timer-container');
         const countdownElement = document.getElementById('countdown');
         const subtitleElement = document.getElementById('dynamic-subtitle');
-        const timerLabel = document.getElementById('timer-label');
+        const rocketIcon = document.getElementById('rocket-icon');
 
-        // Helper to get raw midnights passed safely
         function getCurrentDayIndex() {
             let firstDateStr = localStorage.getItem('countdownFirstStartDate');
             const today = new Date();
             today.setHours(0,0,0,0);
 
             if (!firstDateStr) {
-                // First launch ever: Set today as Day 1
                 firstDateStr = today.toISOString();
                 localStorage.setItem('countdownFirstStartDate', firstDateStr);
             }
@@ -444,20 +518,28 @@
             const currentDayIndex = getCurrentDayIndex();
             const daysLeft = Math.max(0, reasons.length - currentDayIndex);
 
-            // Update header countdown note dynamically based on total reasons
             if (daysLeft > 0) {
-                subtitleElement.innerText = `One reason I love you, unlocked every single day. (${daysLeft} days left)`;
+                subtitleElement.innerText = `ORBIT LOGS: ${daysLeft} COSMIC REASONS REMAINING`;
             } else {
-                subtitleElement.innerText = "All daily reasons unlocked! ❤️";
+                subtitleElement.innerText = "ALL DAILY SECTOR TRANSMISSIONS COMPLETE ❤️";
             }
 
-            // Check if they already pressed the unlock button today
             const todayString = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
             const lastUnlockedDate = localStorage.getItem('lastUnlockedDate');
 
             if (lastUnlockedDate === todayString || currentDayIndex >= reasons.length) {
                 displayMessage(Math.min(currentDayIndex, reasons.length - 1));
             }
+        }
+
+        function triggerLaunchAnimation() {
+            // Add launching class to execute CSS rocket blastoff
+            rocketIcon.classList.add('rocket-launching');
+            
+            // Wait for rocket to fly off-screen before unlocking text
+            setTimeout(() => {
+                unlockMessage();
+            }, 650);
         }
 
         function unlockMessage() {
@@ -475,8 +557,7 @@
             timerContainer.style.display = 'block';
 
             if (index >= reasons.length - 1) {
-                timerLabel.innerText = "You've completed the journey!";
-                countdownElement.innerText = "Forever & Always";
+                countdownElement.innerText = "INFINITE CALIBRATION COMPLETE";
             } else {
                 startCountdown();
             }
@@ -504,7 +585,6 @@
             setInterval(updateTimer, 1000);
         }
 
-        // Initialize setup on load
         checkStatus();
     </script>
 </body>
