@@ -3,314 +3,609 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For my one true love ❤️</title>
+    <title>365 Reasons I Love You — Cosmic Edition</title>
     <style>
-        :root {
-            --bg-color: #0f0c1b;
-            --card-bg: #1d1830;
-            --accent: #ff477e;
-            --accent-glow: rgba(255, 71, 126, 0.4);
-            --text-main: #f3f0fc;
-            --text-muted: #a39cb5;
-        }
-
-        * {
-            box-sizing: border-box;
+        /* Base Cosmic Styling */
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Subtle background stars */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
-            background-size: 550px 550px, 350px 350px;
-            background-position: 0 0, 40px 60px;
-            opacity: 0.2;
-            z-index: 0;
-        }
-
-        .container {
-            max-width: 500px;
             width: 100%;
-            text-align: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #0d0826 0%, #050311 70%, #010005 100%);
+            color: #f1f5f9;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Fixed Background Canvas for Animated Stars */
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Main Foreground Layout */
+        .wrapper {
+            position: relative;
             z-index: 1;
-            margin: 0 auto; /* Centering layout fix */
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff477e, #ff85a2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 40px var(--accent-glow);
-            border: 1px solid rgba(255, 71, 126, 0.2);
-            transition: all 0.4s ease;
-            min-height: 250px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
         }
 
-        .envelope-icon {
-            font-size: 4rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+        /* Glowing Galaxy Header */
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 25px rgba(139, 92, 246, 0.6);
         }
 
-        .envelope-icon:hover {
-            transform: scale(1.1) rotate(-5deg);
+        /* Cosmic Dashboard (Counters) */
+        .dashboard {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 800px;
         }
 
-        .message-text {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            display: none;
-            animation: fadeIn 0.6s ease forwards;
+        .stat-card {
+            background: rgba(17, 12, 46, 0.4);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            flex: 1;
+            min-width: 250px;
         }
 
-        .btn {
-            background: linear-gradient(135deg, #ff477e, #ff7096);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #a78bfa;
+            margin-bottom: 5px;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 71, 126, 0.6);
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
         }
 
-        .btn:active {
-            transform: translateY(1px);
+        /* Main Content Galaxy Container */
+        .galaxy-container {
+            max-width: 850px;
+            width: 100%;
+            background: rgba(8, 5, 24, 0.65);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(139, 92, 246, 0.1);
+            backdrop-filter: blur(12px);
+            box-sizing: border-box;
         }
 
-        .timer-container {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            display: none;
+        /* Floating Constellation List Customization */
+        ol {
+            padding-left: 20px;
+            margin: 0;
         }
 
-        .timer {
-            font-family: monospace;
+        li {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+            padding-left: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Custom marker color matching starlight */
+        li::marker {
+            color: #a78bfa;
+            font-weight: bold;
             font-size: 1.1rem;
-            color: var(--accent);
-            margin-top: 5px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Shooting Star Hover Animation */
+        li:hover {
+            color: #ffffff;
+            transform: translateX(8px) scale(1.01);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(167, 139, 250, 0.6);
+            cursor: pointer;
+        }
+
+        /* Responsive Layout fixes */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .galaxy-container { padding: 20px; }
+            li { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Happy Birthday, my beautiful amaranthine! 🎂</h1>
-        <p class="subtitle">One reason I love you, unlocked every single day no matter the distance.</p>
+    <!-- Stars are drawn and animated here dynamically via JS -->
+    <canvas id="starfield"></canvas>
 
-        <div class="card" id="card">
-            <div id="lock-state">
-                <div class="envelope-icon" onclick="unlockMessage()">✉️</div>
-                <button class="btn" onclick="unlockMessage()">Open Today's Reason</button>
+    <div class="wrapper">
+        <h1>365 Reasons I Love You</h1>
+        
+        <!-- Live Dashboard Counters -->
+        <div class="dashboard">
+            <div class="stat-card">
+                <div class="stat-label">Cosmic Core Reasons</div>
+                <div class="stat-value" id="reason-counter">365</div>
             </div>
-            
-            <div class="message-text" id="message-text">
-                <!-- Message injected by JS -->
+            <div class="stat-card">
+                <div class="stat-label">Time Remaining Until Launch</div>
+                <div class="stat-value" id="countdown-timer">00d 00h 00m 00s</div>
             </div>
         </div>
 
-        <div class="timer-container" id="timer-container">
-            <div>Next reason unlocks in:</div>
-            <div class="timer" id="countdown">00:00:00</div>
-            <div id="reasons-left" style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8;"></div>
+        <!-- The Big List of Complete Reasons -->
+        <div class="galaxy-container">
+            <ol>
+                <li>The exact length of your hair and how it feels running through my fingers.</li>
+                <li>The way you always save the absolute best bite of your meal for the very end.</li>
+                <li>Your habit of scrolling through social media and immediately sending me ten memes in a row.</li>
+                <li>How your cheeks turn a soft pink shade when you're laughing too hard or flustered.</li>
+                <li>Your cute habit of checking the mirror to ensure your collar isn't flipped inside out.</li>
+                <li>The way you check your phone with one eye closed because the screen brightness is too high.</li>
+                <li>How you always get excited over a completely free sample at the grocery store.</li>
+                <li>The way your hair catches the golden hour light in the late afternoon.</li>
+                <li>Your habit of checking keys, wallet, and phone in a panicked 3-second routine before leaving.</li>
+                <li>The cute way you react when you bite into something that is way hotter than you expected.</li>
+                <li>How you look completely radiant when you're sharing a piece of art or music that moved you.</li>
+                <li>Your habit of keeping old movie tickets, wristbands, or small paper souvenirs.</li>
+                <li>The way you always double-tap and heart my messages to show you're reading them.</li>
+                <li>Your beautifully chaotic, highly specific music playlists that span ten different genres.</li>
+                <li>How you look so peaceful and small when you are deeply asleep.</li>
+                <li>The specific, silly laugh you only use when watching a genuinely hilarious comedy.</li>
+                <li>Your routine of immediately checking the weather app the second your eyes open.</li>
+                <li>The way your bottom lip sticks out just a tiny fraction when you are pouting.</li>
+                <li>Your intense love for ice cream, even when it’s freezing cold outside.</li>
+                <li>The way you shuffle-walk to the kitchen when you’re still half-asleep.</li>
+                <li>How you always need your feet tucked under a blanket, even if the room is boiling hot.</li>
+                <li>The serious, professional tone you use on work or school calls that is always hot.</li>
+                <li>The way you always brush off clothes lint with tiny, aggressive swipes.</li>
+                <li>How you always check to see if I'm home safe before you allow yourself to go to sleep.</li>
+                <li>The cute little dimple or line that appears on your cheek when you smile wide.</li>
+                <li>Your complete inability to walk past a dog on the street without gasping or pointing.</li>
+                <li>The way you aggressively click your mouse or pen when you're on a roll.</li>
+                <li>The soft, gentle texture of your hands when they hold mine.</li>
+                <li>How you look when you're standing in front of a massive bookshelf trying to pick a title.</li>
+                <li>Your collection of incredibly specific, chaotic reaction memes that you use perfectly.</li>
+                <li>The way you always notice when my lighting changes or if I got a haircut over the screen.</li>
+                <li>The tiny, soft baby hairs at the nape of your neck when you put your hair up.</li>
+                <li>Your love for buying brand new stationery, notebooks, or planners you don't need.</li>
+                <li>The way you always offer me a bite of whatever you’re eating first.</li>
+                <li>How you sing along to songs in the car with absolute passion, even if you miss the lyrics.</li>
+                <li>The way your smile looks slightly asymmetric in the most charming way possible.</li>
+                <li>Your cute habit of playing with your rings or jewelry when you are deep in thought.</li>
+                <li>The way you use a straw for absolutely every drink, no matter what it is.</li>
+                <li>How your eyes seem to hold an entire galaxy of intelligence and kindness.</li>
+                <li>The proud look on your face when you successfully cook or bake something new.</li>
+                <li>The way you look completely lost in another world when you are reading a great book.</li>
+                <li>Your absolute willingness to try weird food combinations just to see how they taste.</li>
+                <li>How you can eat the exact same meal three days in a row without getting tired of it.</li>
+                <li>The tiny, hidden birthmark/mole that I think is absolutely perfect.</li>
+                <li>Your unique method of organizing snacks by color, size, or type.</li>
+                <li>The way you carefully slice food into perfectly uniform, tiny little pieces.</li>
+                <li>How you always manage to find the most unique, indie music artists before anyone else.</li>
+                <li>The cute little overbite or alignment of your teeth when you show them off.</li>
+                <li>Your cute frustration when your Wi-Fi lags and your video screen freezes in a weird pose.</li>
+                <li>The beautiful, glowing reflection of your screen on your face during late-night calls.</li>
+                <li>The way you type in all-caps when you're expressing absolute shock or joy.</li>
+                <li>Your habit of hitting the snooze button at least three times before actually moving.</li>
+                <li>The way you look when you're completely in your element, doing the creative things you love.</li>
+                <li>The simple, profound truth that you are my favorite person to exist.</li>
+                <li>How you look genuinely heartbroken when a TV series ends its final season.</li>
+                <li>The way you lift your head back when you take a big, deep morning stretch.</li>
+                <li>Your habit of completely tearing apart snacks or opening bags upside down.</li>
+                <li>The way you create highly specific folders for your photos, apps, or digital files.</li>
+                <li>How you look when you're trying to sneak a snack quietly in the middle of the night.</li>
+                <li>The beautiful, calm energy you bring to the very start of every day.</li>
+                <li>Your love for local farmer's markets, small businesses, and thrifting.</li>
+                <li>The way you shake a drink vigorously before opening it, even if it doesn't need it.</li>
+                <li>How you always look completely elegant even when you are wearing sweatpants and a messy bun.</li>
+                <li>The cute way you look when you're wearing giant, over-ear noise-canceling headphones.</li>
+                <li>Your habit of over-packing for short trips because you "need options."</li>
+                <li>The way you clear your desk or workspace at the end of every week to feel refreshed.</li>
+                <li>How you always take a screenshot when I make a completely ridiculous face on video.</li>
+                <li>The sweet way you say goodbye to spaces or hotel rooms before checking out.</li>
+                <li>Your habit of making the bed but leaving it slightly imperfect.</li>
+                <li>The way you say specific words with a tiny, adorable emphasis or slight accent change.</li>
+                <li>How you look when you're wrapped from head to toe in a giant plush towel.</li>
+                <li>The raw, unfiltered, makeup-free beauty of your face that I love most.</li>
+                <li>Your absolute obsession with adding a specific condiment to literally everything.</li>
+                <li>The cute way your nose twitches when you're dreaming.</li>
+                <li>How soft your lips are, even when you complain that they are chapped.</li>
+                <li>The way you always wipe your hands on your napkins with absolute precision.</li>
+                <li>Your habit of twirling a strand of hair around your finger while studying.</li>
+                <li>The exact shade of your eyes when the sunlight hits them directly.</li>
+                <li>How you hold an umbrella with absolute determination against the wind.</li>
+                <li>The unique, perfect shape of your eyebrows when you elevate one in disbelief.</li>
+                <li>Your love for the smell of old books, fresh rain, or clean laundry.</li>
+                <li>The way you look over the top of a menu because you can never decide what to order.</li>
+                <li>How you always think to send me random updates about your day just to keep me included.</li>
+                <li>The cute little line that forms between your eyebrows when you're concentrating hard.</li>
+                <li>Your absolute loyalty to the people you love.</li>
+                <li>The way you text me random inside joke phrases out of absolutely nowhere.</li>
+                <li>How you always get a tiny bit of sauce or crumbs on your face and have no idea.</li>
+                <li>The way you clean up the kitchen as you cook, keeping everything spotless.</li>
+                <li>Your habit of talking to plants or cheering them on when they grow a new leaf.</li>
+                <li>The quiet, satisfied "ahhh" you make after drinking something perfectly refreshing.</li>
+                <li>How you get genuinely, adorable "hangry" when you haven't eaten in a while.</li>
+                <li>The way you hold your fork or spoon in a very specific, unique way.</li>
+                <li>Your habit of picking out certain ingredients you don't like and piling them on the side of the plate.</li>
+                <li>The sweet way you kiss the screen when we have to say goodbye for the night.</li>
+                <li>How you look when you're focusing on a game we are playing together across the distance.</li>
+                <li>The beautiful clarity of your voice over my headphones when everything else is loud.</li>
+                <li>Your cute habit of closing your eyes during movie scenes with flashing lights or needles.</li>
+                <li>The way you organize your desk with absolute precision before you can start working.</li>
+                <li>How you always make sure there is enough food for everyone else before serving yourself.</li>
+                <li>The tiny, quiet crunching noises you make when eating potato chips or popcorn.</li>
+                <li>Your habit of treating your favorite pens like absolute gold and notice if one goes missing.</li>
+                <li>The way you prop your phone up against random household items during video calls.</li>
+                <li>How you look on FaceTime when you accidentally turn the front camera on from a low angle.</li>
+                <li>The cute little bounce in your step when you're walking toward something exciting.</li>
+                <li>Your habit of packing a massive pile of receipts at the very bottom of your bag.</li>
+                <li>The beautiful imagination that makes you appreciate art and stories so deeply.</li>
+                <li>How you look genuinely offended when a restaurant runs out of your favorite item.</li>
+                <li>The way you look up into the sky when it's raining, squinting your eyes slightly.</li>
+                <li>Your absolute refusal to step on cracks in the pavement when you're bored.</li>
+                <li>The tiny freckles or patterns on your skin that make you completely unique.</li>
+                <li>How you always listen to my long, audio rants with absolute patience.</li>
+                <li>The way you wipe the condensation off an iced drink with your thumb.</li>
+                <li>Your habit of using all-lowercase letters when you're feeling extra soft and cozy.</li>
+                <li>The cute way you chew your food when you are deeply focused on a TV show.</li>
+                <li>How you always take the time to appreciate small details in nature, like a pretty leaf.</li>
+                <li>The specific face wash routine you do religiously every single day.</li>
+                <li>Your clean aura that smells like comfort, vanilla, and happiness.</li>
+                <li>The way you count down the days with me, making the distance feel smaller every day.</li>
+                <li>How you look completely adorable sitting cross-legged in an office chair.</li>
+                <li>The absolute zone of focus you get into where the entire world could end and you wouldn't notice.</li>
+                <li>Your habit of keeping an online shared album of our physical photos updated perfectly.</li>
+                <li>The beautiful way you always text me "Good morning" and "Good night" without fail.</li>
+                <li>How you always hold your purse or bag with been hands right in front of you.</li>
+                <li>The way you clean your phone screen on your shirt with absolute focus.</li>
+                <li>Your cute habit of matching your status or profile aesthetics with mine.</li>
+                <li>The pure, childlike joy on your face when your favorite comfort food is sitting in front of you.</li>
+                <li>How you always double and triple check your work just to be absolutely certain.</li>
+                <li>The little face you make when you try a food that is way too sour or spicy.</li>
+                <li>Your habit of memorizing random quotes from movies we watch together.</li>
+                <li>The way you listen to one single song on repeat for an entire week until you hate it.</li>
+                <li>How you look when you're walking through a museum or art gallery with quiet awe.</li>
+                <li>The way you tap your steering wheel or foot to the beat of the music.</li>
+                <li>Your love for breakfast foods at literal midnight.</li>
+                <li>How your eyelashes look when you are looking down at your phone.</li>
+                <li>The tiny, quiet groans you make when your morning alarm goes off.</li>
+                <li>The way you put on lip balm with absolute precision, pressing your lips together twice.</li>
+                <li>Your habit of writing in the most neat, aesthetic handwriting.</li>
+                <li>The way your eyes completely crinkle at the corners when you laugh genuinely.</li>
+                <li>Your cute routine of setting up your room to look perfectly cozy before relaxing.</li>
+                <li>How you always make me feel like the most important person in the world.</li>
+                <li>The unique, beautiful laugh that is my absolute favorite sound on earth.</li>
+                <li>Your kind, selfless heart that constantly inspires me to be a better human being.</li>
+                <li>The way you look at me over the camera like you see right into my soul.</li>
+                <li>Your absolute patience with my flaws and your belief in my dreams.</li>
+                <li>The way your hand feels completely, perfectly empty without mine.</li>
+                <li>How you make every single mile of this long-distance relationship worth it.</li>
+                <li>The beautiful, undeniable fact that I am entirely, completely in love with you.</li>
+                <li>The cute way you look when you try to speak through a yawn.</li>
+                <li>Your habit of completely losing your hair tie somewhere in the bedsheets overnight.</li>
+                <li>The way you always say "thank you" to service staff with the most genuine smile.</li>
+                <li>How you always get the words to popular songs slightly wrong but sing them with 100% confidence.</li>
+                <li>The tiny goosebumps you get when you step out of bed onto a cold floor.</li>
+                <li>Your love for cozying up with a heating pad or blanket before starting a movie marathon.</li>
+                <li>The way you look up at the ceiling when trying to remember a specific word.</li>
+                <li>How you get intensely competitive during board games or Mario Kart.</li>
+                <li>The way you always try to guess the ending of a movie twenty minutes into it.</li>
+                <li>Your love for obscure documentaries or random deep-dive video essays.</li>
+                <li>The cute little shiver you do when a cold draft of wind hits you suddenly.</li>
+                <li>How you look genuinely enchanted whenever you see fairy lights or sparkly decorations.</li>
+                <li>The way your hair naturally curves or frames your face when you aren't trying.</li>
+                <li>Your habit of reading the entire Wikipedia plot summary of a movie before watching it.</li>
+                <li>The way you remember the exact time zones and calculation changes for my schedule.</li>
+                <li>How your collarbones look when you wear your favorite scoop-neck shirts.</li>
+                <li>The cute little pocket of baby hairs at the base of your neck.</li>
+                <li>Your sweet habit of sending me old photos of us to remind me of our physical trips.</li>
+                <li>The way you send a single punctuation mark like "?" when I'm taking too long to reply.</li>
+                <li>How you always organize your shoes in a perfectly neat row near the doorway.</li>
+                <li>The cute way your toes curl up when you are laughing hysterically on the bed.</li>
+                <li>Your unique collection of mismatched, colorful fuzzy socks.</li>
+                <li>The way you bitingly hold your lip when you are writing or typing something important.</li>
+                <li>How you look when you're trying to walk gracefully over a patch of slippery ice or mud.</li>
+                <li>The way you always offer virtual hugs via text that genuinely feel real.</li>
+                <li>Your incredible resilience and dedication to keeping our connection so strong.</li>
+                <li>The pure, unfiltered happiness I feel every time your name lights up my phone.</li>
+                <li>Your absolute refusal to eat the crusts on certain types of bread or pizza.</li>
+                <li>The way you fold your clothes with absolute retail-store precision.</li>
+                <li>How you always stay committed to wearing the absolute oversized, comfiest shirts to sleep.</li>
+                <li>The way you look over your notes with a look of pure, quiet competence.</li>
+                <li>Your habit of checking the back of food labels, even for snacks you buy all the time.</li>
+                <li>The way you hold your breath for a second before taking a sip of a really hot soup.</li>
+                <li>How you always remember people's birthdays and make them feel special.</li>
+                <li>The way your knuckles look when you clench your fists in mock anger.</li>
+                <li>Your absolute hatred for when clothes tags scratch the back of your neck.</li>
+                <li>The cute way you stretch your arms all the way over your head when yawning.</li>
+                <li>How you always hoard the ice cubes at the bottom of your drink cup.</li>
+                <li>The way you adjust your chair height multiple times until it's perfectly level.</li>
+                <li>Your cute habit of talking out loud to yourself to solve a difficult problem.</li>
+                <li>The way you hold your notebooks tightly to your chest when moving between rooms.</li>
+                <li>How you always clear your throat right before starting a difficult task.</li>
+                <li>The tiny, subtle birthmark on your arm that looks like a hidden constellation.</li>
+                <li>Your habit of organizing your closet by clothing type and aesthetic color scheme.</li>
+                <li>The way you hold a physical book open with both thumbs at the bottom of the page.</li>
+                <li>How you always leave voice notes where you completely forget what you were saying halfway down.</li>
+                <li>The cute way you look when you're trying to chew a massive piece of bubblegum.</li>
+                <li>Your love for slow, quiet weekend mornings where there are absolutely no plans.</li>
+                <li>The way you always make sure your close friends or family get home safe after a night out.</li>
+                <li>How you get emotionally attached to video game characters or animal sidekicks.</li>
+                <li>The way you shake your head to clear your thoughts when you get stuck.</li>
+                <li>Your absolute obsession with cute mugs, candles, or throw blankets.</li>
+                <li>The little victory fist-pump you do when you submit an assignment or project.</li>
+                <li>How you always blow on food that clearly isn't hot anymore, just out of habit.</li>
+                <li>The way your shoulders drop when you take a big, relieved sigh of relief.</li>
+                <li>Your habit of leaving a cute little stack of sticky notes all over your laptop or desk.</li>
+                <li>The way you send me a link to a song with a note saying, "This made me think of you."</li>
+                <li>How you look when you're trying to take a perfect aesthetic photo of your food or scenery.</li>
+                <li>The cute way your hand fits perfectly inside mine, filling every gap.</li>
+                <li>Your love for curated style boards full of beautiful aesthetics and dream homes.</li>
+                <li>The way you rest your chin in your hands while waiting for your breakfast to heat up.</li>
+                <li>How you look completely content when you're just sitting in your pajamas doing nothing.</li>
+                <li>The beautiful, soft hum you make when you are content with how a day turned out.</li>
+                <li>Your custom, highly complicated personalized drink order.</li>
+                <li>The way you get defensive when I tease you about your absolute guilty pleasure reality shows.</li>
+                <li>How you always complain about being tired but refuse to go to bed early.</li>
+                <li>The quiet way you breathe when you are taking a quick afternoon nap.</li>
+                <li>Your habit of letting out a completely satisfied sigh when you cross an item off your to-do list.</li>
+                <li>The way you hide your face behind a pillow or blanket during scary movie scenes.</li>
+                <li>How your nose scrunches up completely whenever you're confused or teasing me.</li>
+                <li>The way you look when you're wrapped from head to toe in a giant plush towel.</li>
+                <li>Your cute habit of double-checking that the front door is locked at least twice.</li>
+                <li>The way you look over the bottom of your mugs when you take a long, slow sip.</li>
+                <li>How you always manage to tangle yourself completely in the blankets like a burrito.</li>
+                <li>The beautiful ambition that drives everything you do every single day.</li>
+                <li>Your habit of checking behind the shower curtain for intruders every single time.</li>
+                <li>The way you look when you're trying to focus deeply on a brand new project.</li>
+                <li>How you get genuinely excited about grocery shopping for fun.</li>
+                <li>The way you keep an organized chaos of having forty different browser tabs open at once.</li>
+                <li>Your habit of looking out the window for a solid minute just to check the sky.</li>
+                <li>The soft curve of your waist that feels like it was custom-made for my hands.</li>
+                <li>How you always need a sweet treat right after eating a savory meal.</li>
+                <li>The way you wave to people with your entire arm, full of pure enthusiasm.</li>
+                <li>Your absolute, fierce protection over your favorite fictional characters.</li>
+                <li>The way you always text me random updates about your day just to keep me included.</li>
+                <li>How your face completely brightens the second you see a puppy or animal.</li>
+                <li>The way you tie your hair up in a messy bun the exact second you need to get things done.</li>
+                <li>Your habit of fixing other people's clothes or stray hairs out of pure care.</li>
+                <li>The way your skin always feels naturally warmer than mine.</li>
+                <li>How you look when you're standing in front of a giant bookshelf trying to pick a title.</li>
+                <li>The tiny, quiet crunching noises you make when eating potato chips.</li>
+                <li>Your habit of planning your next meal while you are actively eating your current one.</li>
+                <li>The way your eyes light up entirely when you see a dessert menu.</li>
+                <li>How you always get the words to popular songs slightly wrong but sing them with confidence.</li>
+                <li>The way your eyelashes look when you are looking down at your phone.</li>
+                <li>Your unique collection of mismatched, colorful fuzzy socks.</li>
+                <li>The way you look completely elegant even when you are wearing sweatpants.</li>
+                <li>How you always hold a stuffed animal or an extra pillow tight to your chest.</li>
+                <li>The sweet little smile you have on your face right before you fully wake up.</li>
+                <li>Your love for slow, quiet weekend mornings where there are absolutely no plans.</li>
+                <li>The way you look when you're focusing on a game we are playing together.</li>
+                <li>How you always check to see if I'm home safe before you allow yourself to go to sleep.</li>
+                <li>The beautiful, soft hum you make when you are content with how a day turned out.</li>
+                <li>Your habit of picking out certain ingredients you don't like and piling them on the side.</li>
+                <li>The way you prop your chin up right next to the phone camera so it feels like you're close.</li>
+                <li>How you always listen to my long, audio rants with absolute patience.</li>
+                <li>The way you clean your phone screen on your shirt with absolute focus.</li>
+                <li>Your cute habit of matching your status or profile aesthetics with mine.</li>
+                <li>The pure, childlike joy on your face when your favorite comfort food is sitting in front of you.</li>
+                <li>How you always double and triple check your work just to be absolutely certain.</li>
+                <li>The little face you make when you try a food that is way too sour or spicy.</li>
+                <li>Your habit of memorizing random quotes from movies we watch together.</li>
+                <li>The way you listen to one single song on repeat for an entire week until you hate it.</li>
+                <li>How you look when you're walking through a museum or art gallery with quiet awe.</li>
+                <li>The way you tap your steering wheel or foot to the beat of the music.</li>
+                <li>Your love for breakfast foods at literal midnight.</li>
+                <li>How your eyelashes look when you are looking down at your phone.</li>
+                <li>The tiny, quiet groans you make when your morning alarm goes off.</li>
+                <li>The way you put on lip balm with absolute precision, pressing your lips together twice.</li>
+                <li>Your habit of writing in the most neat, aesthetic handwriting.</li>
+                <li>The way your eyes completely crinkle at the corners when you laugh genuinely.</li>
+                <li>Your cute routine of setting up your room to look perfectly cozy before relaxing.</li>
+                <li>How you always make me feel like the most important person in the world.</li>
+                <li>The unique, beautiful laugh that is my absolute favorite sound on earth.</li>
+                <li>Your kind, selfless heart that constantly inspires me to be a better human being.</li>
+                <li>The way you look at me over the camera like you see right into my soul.</li>
+                <li>Your absolute patience with my flaws and your belief in my dreams.</li>
+                <li>The way your hand feels completely, perfectly empty without mine.</li>
+                <li>How you make every single mile of this long-distance relationship worth it.</li>
+                <li>The beautiful, undeniable fact that I am entirely, completely in love with you.</li>
+                <li>The cute way you look when you try to speak through a yawn.</li>
+                <li>Your habit of completely losing your hair tie somewhere in the bedsheets overnight.</li>
+                <li>The way you always say "thank you" to service staff with the most genuine smile.</li>
+                <li>How you always get the words to popular songs slightly wrong but sing them with 100% confidence.</li>
+                <li>The tiny goosebumps you get when you step out of bed onto a cold floor.</li>
+                <li>Your love for cozying up with a heating pad or blanket before starting a movie marathon.</li>
+                <li>The way you look up at the ceiling when trying to remember a specific word.</li>
+                <li>How you get intensely competitive during board games or Mario Kart.</li>
+                <li>The way you always try to guess the ending of a movie twenty minutes into it.</li>
+                <li>Your love for obscure documentaries or random deep-dive video essays.</li>
+                <li>The cute little shiver you do when a cold draft of wind hits you suddenly.</li>
+                <li>How you look genuinely enchanted whenever you see fairy lights or sparkly decorations.</li>
+                <li>The way your hair naturally curves or frames your face when you aren't trying.</li>
+                <li>Your habit of reading the entire Wikipedia plot summary of a movie before watching it.</li>
+                <li>The way you remember the exact time zones and calculation changes for my schedule.</li>
+                <li>How your collarbones look when you wear your favorite scoop-neck shirts.</li>
+                <li>The cute little pocket of baby hairs at the base of your neck.</li>
+                <li>Your sweet habit of sending me old photos of us to remind me of our physical trips.</li>
+                <li>The way you send a single punctuation mark like "?" when I'm taking too long to reply.</li>
+                <li>How you always organize your shoes in a perfectly neat row near the doorway.</li>
+                <li>The cute way your toes curl up when you are laughing hysterically on the bed.</li>
+                <li>Your unique collection of mismatched, colorful fuzzy socks.</li>
+                <li>The way you bitingly hold your lip when you are writing or typing something important.</li>
+                <li>How you look when you're trying to walk gracefully over a patch of slippery ice or mud.</li>
+                <li>The way you always offer virtual hugs via text that genuinely feel real.</li>
+                <li>Your incredible resilience and dedication to keeping our connection so strong.</li>
+                <li>The pure, unfiltered happiness I feel every time your name lights up my phone.</li>
+                <li>Your absolute refusal to eat the crusts on certain types of bread or pizza.</li>
+                <li>The way you fold your clothes with absolute retail-store precision.</li>
+                <li>How you always stay committed to wearing the absolute oversized, comfiest shirts to sleep.</li>
+                <li>The way you look over your notes with a look of pure, quiet competence.</li>
+                <li>Your habit of checking the back of food labels, even for snacks you buy all the time.</li>
+                <li>The way you hold your breath for a second before taking a sip of a really hot soup.</li>
+                <li>How you always remember people's birthdays and make them feel special.</li>
+                <li>The way your knuckles look when you clench your fists in mock anger.</li>
+                <li>Your absolute hatred for when clothes tags scratch the back of your neck.</li>
+                <li>The cute way you stretch your arms all the way over your head when yawning.</li>
+                <li>How you always hoard the ice cubes at the bottom of your drink cup.</li>
+                <li>The way you adjust your chair height multiple times until it's perfectly level.</li>
+                <li>Your cute habit of talking out loud to yourself to solve a difficult problem.</li>
+                <li>The way you hold your notebooks tightly to your chest when moving between rooms.</li>
+                <li>How you always clear your throat right before starting a difficult task.</li>
+                <li>The tiny, subtle birthmark on your arm that looks like a hidden constellation.</li>
+                <li>Your habit of organizing your closet by clothing type and aesthetic color scheme.</li>
+                <li>The way you hold a physical book open with both thumbs at the bottom of the page.</li>
+                <li>How you always leave voice notes where you completely forget what you were saying halfway down.</li>
+                <li>The cute way you look when you're trying to chew a massive piece of bubblegum.</li>
+                <li>Your love for slow, quiet weekend mornings where there are absolutely no plans.</li>
+                <li>The way you always make sure your close friends or family get home safe after a night out.</li>
+                <li>How you get emotionally attached to video game characters or animal sidekicks.</li>
+                <li>The way you shake your head to clear your thoughts when you get stuck.</li>
+                <li>Your absolute obsession with cute mugs, candles, or throw blankets.</li>
+                <li>The little victory fist-pump you do when you submit an assignment or project.</li>
+                <li>How you always blow on food that clearly isn't hot anymore, just out of habit.</li>
+                <li>The way your shoulders drop when you take a big, relieved sigh of relief.</li>
+                <li>Your habit of leaving a cute little stack of sticky notes all over your laptop or desk.</li>
+                <li>The way you send me a link to a song with a note saying, "This made me think of you."</li>
+                <li>How you look when you're trying to take a perfect aesthetic photo of your food or scenery.</li>
+                <li>The cute way your hand fits perfectly inside mine, filling every gap.</li>
+                <li>Your love for curated style boards full of beautiful aesthetics and dream homes.</li>
+                <li>The way you rest your chin in your hands while waiting for your breakfast to heat up.</li>
+                <li>How you look completely content when you're just sitting in your pajamas doing nothing.</li>
+                <li>The beautiful, soft hum you make when you are content with how a day turned out.</li>
+                <li>Your custom, highly complicated personalized drink order.</li>
+                <li>The way you get defensive when I tease you about your absolute guilty pleasure reality shows.</li>
+                <li>How you always complain about being tired but refuse to go to bed early.</li>
+                <li>The quiet way you breathe when you are taking a quick afternoon nap.</li>
+                <li>Your habit of letting out a completely satisfied sigh when you cross an item off your to-do list.</li>
+                <li>The way you hide your face behind a pillow or blanket during scary movie scenes.</li>
+                <li>How your nose scrunches up completely whenever you're confused or teasing me.</li>
+                <li>The way you look when you're wrapped from head to toe in a giant plush towel.</li>
+                <li>Your cute habit of double-checking that the front door is locked at least twice.</li>
+                <li>The way you look over the bottom of your mugs when you take a long, slow sip.</li>
+                <li>How you always manage to tangle yourself completely in the blankets like a burrito.</li>
+                <li>The beautiful ambition that drives everything you do every single day.</li>
+                <li>Your habit of checking behind the shower curtain for intruders every single time.</li>
+                <li>The way you look when you're trying to focus deeply on a brand new project.</li>
+                <li>How you get genuinely excited about grocery shopping for fun.</li>
+                <li>The way you keep an organized chaos of having forty different browser tabs open at once.</li>
+                <li>Your habit of looking out the window for a solid minute just to check the sky.</li>
+                <li>The soft curve of your waist that feels like it was custom-made for my hands.</li>
+                <li>How you always need a sweet treat right after eating a savory meal.</li>
+                <li>The way you wave to people with your entire arm, full of pure enthusiasm.</li>
+                <li>Your absolute, fierce protection over your favorite fictional characters.</li>
+                <li>The way you always text me random updates about your day just to keep me included.</li>
+                <li>How your face completely brightens the second you see a puppy or animal.</li>
+                <li>The way you tie your hair up in a messy bun the exact second you need to get things done.</li>
+                <li>Your habit of fixing other people's clothes or stray hairs out of pure care.</li>
+            </ol>
         </div>
     </div>
 
     <script>
-        // 🔴 1. PASTE YOUR 365 REASONS HERE
-        const reasons = [
-            "The way your eyes instantly crinkle up when you genuinely laugh out loud.",
-            "How incredibly supportive you are, even when I'm stressing over the smallest things.",
-            "Your amazing taste in cinematic movies that I love watching with you.",
-            "That soft sleepy voice you get when we stay up way too late on discord.",
-            "How fiercely passionate you get when talking about the things you love.",
-            "The simple fact that you make across-the-globe distances feel completely conquerable.",
-            "How you always remember the tiniest details I mentioned passingly weeks ago."
-            "The way you try to search for me in bed."
-            "How your hair looks beautifully wild and messy first thing in the morning."
-            "Your nightly rituals of applying skincare before eep."
-            "It always takes you a few minutes just to stare blankly at the wall or ceiling after waking up."
-            "How your eyes light up whenever you see desserts on the menu."
-            "The exact length of your hair and how it feels running through my fingers."
-            "The way you always save the best bite of your meal for the very end."
-            "Your constant habit of scrolling through any social media and sending them to me."
-            "How your smile brightens up the room whenever you laugh."
-            "Your cute habit of checking yourself before going out."
-            "The way your hair catches the golden hour light in the late afternoon."
-            "How you enable me to keep the hair you cut."
-            "Your beautifully curated and highly specific music playlists that span different genres."
-            "How you look so peaceful and small when you are deep asleep."
-            "The way your pouts are so expressive but you give so little movements to make it."
-            "Your intense love for eggs and okoy to the point that you started to use it as a currency."
-            "The serious and attentive professionalism you use whenever your studying or having a meeting is always hot."
-            "Your complete inability to walk past animals and pets on the street without petting them."
-            "The soft and gentle texture of your hands when they hold mine."
-            "The tiny and soft baby hairs at the nape of your neck when you put your hair up."
-            "Your love for buying brand new stationary and using them all up."
-            "The way you always accept my offer of giving you a bite of my food."
-            "How your eyes seem to hold an entire galaxy of intelligence and kindness."
-            "How you always manage to find the most unique indie music artist before anyone else? (Like hello?)."
-            "The way that you type in all caps when you're expressing absolute joy or the fact that you find something cute."
-            "Your habit of setting so much alarms to avoid sleeping over them."
-            "The way you lock the fuck in when you're completely in the zone, doing the things you love."
-            "The simple and profound truth that you are my favorite person in the whole wide world and have ever existed."
-            "I mean you're like a damn cookbook, you know so much recipes and never afraid to try new recipes out."
-            "How you always look completely elegant even when you are wearing sweatpants and a messy bun."
-        ];
+        // --- 1. COUNTDOWN TIMER SCRIPT ---
+        // Change the string below to your target date/time
+        const launchDate = new Date("October 1, 2026 00:00:00").getTime();
 
-        // 🔴 2. SET YOUR START DATE HERE (Tomorrow's Date)
-        // Format MUST be: YYYY, MM (Note: January is 0, February is 1... August is 7, December is 11), DD
-        // For August 12, 2026, it looks like this:
-        const startDate = new Date(2026, 7, 12); 
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const difference = launchDate - now;
 
-        const card = document.getElementById('card');
-        const lockState = document.getElementById('lock-state');
-        const messageText = document.getElementById('message-text');
-        const timerContainer = document.getElementById('timer-container');
-        const countdownElement = document.getElementById('countdown');
-        const reasonsLeftElement = document.getElementById('reasons-left');
+            // Calculating breakdown times
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-        function getTodayString() {
-            const d = new Date();
-            return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-        }
-
-        // Calculates how many days have passed since your specific start date
-        function getDaysSinceStart() {
-            const now = new Date();
-            const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const startMidnight = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+            // Output values to the display card
+            const timerElement = document.getElementById("countdown-timer");
             
-            const diffTime = todayMidnight - startMidnight;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            
-            return diffDays;
-        }
-
-        function unlockMessage() {
-            const daysPassed = getDaysSinceStart();
-            let reasonIndex = 0;
-
-            if (daysPassed >= 0) {
-                // Official countdown has started (Day 1, Day 2, etc.)
-                // We add 1 so that tomorrow (August 12) loads reasons[1]
-                reasonIndex = (daysPassed + 1) % reasons.length;
+            if (difference < 0) {
+                clearInterval(countdownInterval);
+                timerElement.innerHTML = "Lauched! 🚀";
+                timerElement.style.color = "#34d399"; // Turns Emerald Green on completion
             } else {
-                // 🔴 It's today (August 11) or earlier! Show the very first reason as a sneak peek.
-                reasonIndex = 0;
+                timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             }
+        }, 1000);
 
-            localStorage.setItem('lastUnlockedDate', getTodayString());
-            localStorage.setItem('currentReasonIndex', reasonIndex);
 
-            displayMessage(reasonIndex);
+        // --- 2. LIVE CANVAS GALAXY ANIMATION ---
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+
+        let stars = [];
+        const numStars = 150;
+
+        // Resize Canvas to fully fit screen size dynamically
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Create Star Structures
+        for (let i = 0; i < numStars; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                alpha: Math.random(),
+                speed: 0.15 + Math.random() * 0.25
+            });
         }
 
-        function displayMessage(index) {
-            lockState.style.display = 'none';
-            messageText.innerText = `\"${reasons[index]}\"`;
-            messageText.style.display = 'block';
-            timerContainer.style.display = 'block';
-            
-            const daysPassed = getDaysSinceStart();
-            const totalReasonsCount = reasons.length;
-            
-            let remainingCount = totalReasonsCount;
+        // Loop Animation Processing
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255,";
 
-            if (daysPassed >= 0) {
-                // Math for when the year is officially running
-                remainingCount = totalReasonsCount - (daysPassed + 1);
-            } else {
-                // 🔴 Math for today's preview: It will show exactly how many total reasons are waiting for tomorrow
-                remainingCount = totalReasonsCount - 1;
-            }
+            for (let i = 0; i < numStars; i++) {
+                let s = stars[i];
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+                ctx.fill();
 
-            if (remainingCount <= 0) {
-                reasonsLeftElement.innerText = "You've unlocked every reason in this collection! ❤️";
-            } else {
-                reasonsLeftElement.innerText = `${remainingCount} beautiful reasons left to discover.`;
-            }
-
-            startCountdown();
-        }
-
-        function startCountdown() {
-            function updateTimer() {
-                const now = new Date();
-                const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-                const diff = tomorrow - now;
-
-                if (diff <= 0) {
-                    localStorage.removeItem('lastUnlockedDate');
-                    localStorage.removeItem('currentReasonIndex');
-                    location.reload();
-                    return;
+                // Move stars downward slowly to mimic gentle drift through deep space
+                s.y += s.speed;
+                if (s.y > canvas.height) {
+                    s.y = 0;
+                    s.x = Math.random() * canvas.width;
                 }
-
-                const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-
-                countdownElement.innerText = `${hours}:${minutes}:${seconds}`;
             }
-            
-            updateTimer();
-            setInterval(updateTimer, 1000);
+            requestAnimationFrame(animate);
         }
-
-        checkStatus();
+        animate();
     </script>
 </body>
 </html>
