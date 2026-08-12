@@ -148,7 +148,7 @@
 
     <div class="container">
         <h1>Happy Birthday, Beautiful! 🎂</h1>
-        <p class="subtitle">One reason I love you, unlocked every single day.</p>
+        <p class="subtitle" id="dynamic-subtitle">One reason I love you, unlocked every single day.</p>
 
         <div class="card" id="card">
             <div id="lock-state">
@@ -162,7 +162,7 @@
         </div>
 
         <div class="timer-container" id="timer-container">
-            <div>Next reason unlocks in:</div>
+            <div id="timer-label">Next reason unlocks in:</div>
             <div class="timer" id="countdown">00:00:00</div>
         </div>
     </div>
@@ -418,37 +418,54 @@
         const messageText = document.getElementById('message-text');
         const timerContainer = document.getElementById('timer-container');
         const countdownElement = document.getElementById('countdown');
+        const subtitleElement = document.getElementById('dynamic-subtitle');
+        const timerLabel = document.getElementById('timer-label');
 
-        function getTodayString() {
-            const d = new Date();
-            return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+        // Helper to get raw midnights passed safely
+        function getCurrentDayIndex() {
+            let firstDateStr = localStorage.getItem('countdownFirstStartDate');
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            if (!firstDateStr) {
+                // First launch ever: Set today as Day 1
+                firstDateStr = today.toISOString();
+                localStorage.setItem('countdownFirstStartDate', firstDateStr);
+            }
+
+            const startDate = new Date(firstDateStr);
+            const msDiff = today - startDate;
+            const dayIndex = Math.floor(msDiff / (1000 * 60 * 60 * 24));
+            
+            return dayIndex >= 0 ? dayIndex : 0;
         }
 
         function checkStatus() {
-            const today = getTodayString();
-            const savedDate = localStorage.getItem('lastUnlockedDate');
-            const savedIndex = localStorage.getItem('currentReasonIndex');
+            const currentDayIndex = getCurrentDayIndex();
+            const daysLeft = Math.max(0, reasons.length - currentDayIndex);
 
-            if (savedDate === today && savedIndex !== null) {
-                displayMessage(savedIndex);
+            // Update header countdown note dynamically based on total reasons
+            if (daysLeft > 0) {
+                subtitleElement.innerText = `One reason I love you, unlocked every single day. (${daysLeft} days left)`;
+            } else {
+                subtitleElement.innerText = "All daily reasons unlocked! ❤️";
+            }
+
+            // Check if they already pressed the unlock button today
+            const todayString = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
+            const lastUnlockedDate = localStorage.getItem('lastUnlockedDate');
+
+            if (lastUnlockedDate === todayString || currentDayIndex >= reasons.length) {
+                displayMessage(Math.min(currentDayIndex, reasons.length - 1));
             }
         }
 
         function unlockMessage() {
-            const today = getTodayString();
-            
-            const now = new Date();
-            const start = new Date(now.getFullYear(), 0, 0);
-            const diff = now - start;
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
-            
-            const reasonIndex = dayOfYear % reasons.length;
+            const todayString = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
+            const currentDayIndex = getCurrentDayIndex();
 
-            localStorage.setItem('lastUnlockedDate', today);
-            localStorage.setItem('currentReasonIndex', reasonIndex);
-
-            displayMessage(reasonIndex);
+            localStorage.setItem('lastUnlockedDate', todayString);
+            displayMessage(Math.min(currentDayIndex, reasons.length - 1));
         }
 
         function displayMessage(index) {
@@ -456,7 +473,13 @@
             messageText.innerText = `\"${reasons[index]}\"`;
             messageText.style.display = 'block';
             timerContainer.style.display = 'block';
-            startCountdown();
+
+            if (index >= reasons.length - 1) {
+                timerLabel.innerText = "You've completed the journey!";
+                countdownElement.innerText = "Forever & Always";
+            } else {
+                startCountdown();
+            }
         }
 
         function startCountdown() {
@@ -466,8 +489,6 @@
                 const diff = tomorrow - now;
 
                 if (diff <= 0) {
-                    localStorage.removeItem('lastUnlockedDate');
-                    localStorage.removeItem('currentReasonIndex');
                     location.reload();
                     return;
                 }
@@ -483,6 +504,7 @@
             setInterval(updateTimer, 1000);
         }
 
+        // Initialize setup on load
         checkStatus();
     </script>
 </body>
